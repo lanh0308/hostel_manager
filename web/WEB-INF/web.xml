@@ -4,9 +4,49 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.auth.LoginController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListRoomCategory</servlet-name>
+        <servlet-class>controller.room_category.ListRoomCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListBedCategory</servlet-name>
+        <servlet-class>controller.bed_category.ListBedCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddBedCategory</servlet-name>
+        <servlet-class>controller.bed_category.AddBedCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditBedCategory</servlet-name>
+        <servlet-class>controller.bed_category.EditBedCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteBedCategory</servlet-name>
+        <servlet-class>controller.bed_category.DeleteBedCategory</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListRoomCategory</servlet-name>
+        <url-pattern>/room/category</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListBedCategory</servlet-name>
+        <url-pattern>/room/category/bedcategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddBedCategory</servlet-name>
+        <url-pattern>/room/category/bedcategory/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditBedCategory</servlet-name>
+        <url-pattern>/room/category/bedcategory/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteBedCategory</servlet-name>
+        <url-pattern>/room/category/bedcategory/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
