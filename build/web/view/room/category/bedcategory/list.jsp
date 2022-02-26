@@ -19,10 +19,6 @@
         %>
     </head>
     <body>
-        <div id="header">
-            <ul id="nav">
-                
-            </ul>
         <table>
             <tr>
                 <td>STT</td>
@@ -41,7 +37,7 @@
             </tr>
             <%}%>
         </table>
-        <button id="buttonOpenAddForm">insert bed category</button>
+        <button id="buttonOpenAddForm">insert bed category </button>
         <div style="display: none" id="formAddContainer">
             <jsp:include page="add.jsp"/>
         </div>

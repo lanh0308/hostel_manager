@@ -24,6 +24,18 @@
         <servlet-name>DeleteBedCategory</servlet-name>
         <servlet-class>controller.bed_category.DeleteBedCategory</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddRoomCategory</servlet-name>
+        <servlet-class>controller.room_category.AddRoomCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditRoomCategory</servlet-name>
+        <servlet-class>controller.room_category.EditRoomCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteRoomCategory</servlet-name>
+        <servlet-class>controller.room_category.DeleteRoomCategory</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -47,6 +59,18 @@
     <servlet-mapping>
         <servlet-name>DeleteBedCategory</servlet-name>
         <url-pattern>/room/category/bedcategory/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddRoomCategory</servlet-name>
+        <url-pattern>/room/category/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditRoomCategory</servlet-name>
+        <url-pattern>/room/category/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteRoomCategory</servlet-name>
+        <url-pattern>/room/category/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

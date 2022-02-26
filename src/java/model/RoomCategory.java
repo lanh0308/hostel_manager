@@ -12,6 +12,7 @@ package model;
 public class RoomCategory {
     private int ID;
     private String name;
+    private int unit_price;
     private int areage;
     private int floor_number;
     private boolean is_window;
@@ -38,6 +39,14 @@ public class RoomCategory {
 
     public int getAreage() {
         return areage;
+    }
+
+    public int getUnit_price() {
+        return unit_price;
+    }
+
+    public void setUnit_price(int unit_price) {
+        this.unit_price = unit_price;
     }
 
     public void setAreage(int areage) {
