@@ -26,7 +26,7 @@ public class BedCategoryDBContext extends DBContext {
 
         try {
             String sql = "select id, name\n"
-                    + "from bed_category";
+                    + "from [bed_category]";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -120,15 +120,14 @@ public class BedCategoryDBContext extends DBContext {
             }
         }
     }
+    
     public void deleteBedCategory(int id) {
-        String sql = " DELETE [bed_category] \n"
-                + "WHERE [id] = ?";
+        String sql = " DELETE FROM [bed_category] \n"
+                + " WHERE [id] = ?";
         PreparedStatement stm = null;
         try {
             stm = connection.prepareStatement(sql);
-
             stm.setInt(1, id);
-
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(BedCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
