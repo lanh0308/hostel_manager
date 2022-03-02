@@ -5,6 +5,8 @@
  */
 package controller.admin.room_category;
 
+import controller.admin.auth.BaseAuthAdminController;
+import controller.auth.BaseAuthController;
 import dl.BedCategoryDBContext;
 import dl.RoomCategoryDBContext;
 import java.io.IOException;
@@ -20,7 +22,12 @@ import model.RoomCategory;
  *
  * @author lanh0
  */
-public class ListRoomCategory extends HttpServlet {
+public class ListRoomCategory extends BaseAuthAdminController {
+    
+    @Override
+    protected boolean isPermission(HttpServletRequest request) {
+        return true;
+    }
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -32,18 +39,18 @@ public class ListRoomCategory extends HttpServlet {
         
         request.setAttribute("bedCategorys", bedCategorys);
         request.setAttribute("roomCategorys", roomCategorys);
-        request.getRequestDispatcher("/view/room/category/list.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/admin/category/list.jsp").forward(request, response);
     }
 
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -57,5 +64,6 @@ public class ListRoomCategory extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 
 }

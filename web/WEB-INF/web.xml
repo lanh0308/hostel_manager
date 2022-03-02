@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>AuthAdminFilter</filter-name>
+        <filter-class>filter.AuthAdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthAdminFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+         <url-pattern>/dashboard/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.auth.LoginController</servlet-class>
@@ -70,19 +79,19 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ListRoomCategory</servlet-name>
-        <url-pattern>/admin/category</url-pattern>
+        <url-pattern>/admin/room/category</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddRoomCategory</servlet-name>
-        <url-pattern>/admin/category/add</url-pattern>
+        <url-pattern>/admin/room/category/add</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditRoomCategory</servlet-name>
-        <url-pattern>/admin/category/edit</url-pattern>
+        <url-pattern>/admin/room/category/edit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeleteRoomCategory</servlet-name>
-        <url-pattern>/admin/category/delete</url-pattern>
+        <url-pattern>/admin/room/category/delete</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ListServiceCategory</servlet-name>
