@@ -7,7 +7,7 @@
     <filter-mapping>
         <filter-name>AuthAdminFilter</filter-name>
         <url-pattern>/admin/*</url-pattern>
-         <url-pattern>/dashboard/*</url-pattern>
+        <url-pattern>/dashboard/*</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>LoginController</servlet-name>
@@ -57,6 +57,18 @@
         <servlet-name>DashboardController</servlet-name>
         <servlet-class>controller.admin.dashboard.DashboardController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddServiceCategory</servlet-name>
+        <servlet-class>controller.admin.service_category.AddServiceCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditServiceCategory</servlet-name>
+        <servlet-class>controller.admin.service_category.EditServiceCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteServiceController</servlet-name>
+        <servlet-class>controller.admin.service_category.DeleteServiceController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -104,6 +116,18 @@
     <servlet-mapping>
         <servlet-name>DashboardController</servlet-name>
         <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddServiceCategory</servlet-name>
+        <url-pattern>/admin/service/category/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditServiceCategory</servlet-name>
+        <url-pattern>/admin/service/category/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteServiceController</servlet-name>
+        <url-pattern>/admin/service/category/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

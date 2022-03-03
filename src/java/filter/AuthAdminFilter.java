@@ -42,20 +42,22 @@ public class AuthAdminFilter implements Filter {
         if (debug) {
             log("AdminFilter:doFilter()");
         }
-        
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
-        HttpSession session = req.getSession(false);
-        String loginURI = req.getContextPath() + "/admin/login";
+//        
+//        HttpServletRequest req = (HttpServletRequest) request;
+//        HttpServletResponse res = (HttpServletResponse) response;
+//        HttpSession session = req.getSession(false);
+//        String loginURI = req.getContextPath() + "/admin/login";
+//
+//        boolean loggedInAdmin = session != null && session.getAttribute("account") != null;
+//        boolean loginRequest = req.getRequestURI().equals(loginURI);    
+//
+//        if (loggedInAdmin || loginRequest) {
+//            chain.doFilter(request, response);
+//        } else {
+//            res.sendRedirect(loginURI);
+//        }
 
-        boolean loggedInAdmin = session != null && session.getAttribute("account") != null;
-        boolean loginRequest = req.getRequestURI().equals(loginURI);    
-
-        if (loggedInAdmin || loginRequest) {
-            chain.doFilter(request, response);
-        } else {
-            res.sendRedirect(loginURI);
-        }
+        chain.doFilter(request, response);
         
     }
     /**

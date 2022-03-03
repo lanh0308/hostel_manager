@@ -6,20 +6,21 @@
 package controller.admin.service_category;
 
 import controller.admin.auth.BaseAuthAdminController;
+import dl.RoomCategoryDBContext;
 import dl.ServiceCategoryDBContext;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.ServiceCategory;
 
 /**
  *
  * @author lanh0
  */
-public class ListServiceCategory extends BaseAuthAdminController {
-    
+public class DeleteServiceController extends BaseAuthAdminController {
+
     @Override
     protected boolean isPermission(HttpServletRequest request) {
         return true;
@@ -27,20 +28,18 @@ public class ListServiceCategory extends BaseAuthAdminController {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServiceCategoryDBContext serviceCategoryDBContext = new ServiceCategoryDBContext();
-        ArrayList<ServiceCategory> serviceCategorys = serviceCategoryDBContext.getServiceCategorys();
-        request.setAttribute("serviceCategorys", serviceCategorys);
-        request.getRequestDispatcher("/view/admin/servicecategory/list.jsp").forward(request, response);
+        int id = Integer.parseInt(request.getParameter("id"));
+        ServiceCategoryDBContext serviceDB = new ServiceCategoryDBContext();
+        serviceDB.deleteServiceCategory(id);
+        response.sendRedirect(request.getHeader("referer"));
     }
 
-    
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -56,7 +55,5 @@ public class ListServiceCategory extends BaseAuthAdminController {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    
 
 }
