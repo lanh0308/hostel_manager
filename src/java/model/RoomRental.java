@@ -21,7 +21,7 @@ public class RoomRental {
     private Date start_date;
     private Date end_date;
     private boolean state;
-    ArrayList<Service> services;
+    private ArrayList<Service> services;
 
     public ArrayList<Service> getServices() {
         return services;

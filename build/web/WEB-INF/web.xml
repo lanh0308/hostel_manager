@@ -89,6 +89,10 @@
         <servlet-name>RentalController</servlet-name>
         <servlet-class>controller.admin.rental.RentalController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DetailRentalController</servlet-name>
+        <servlet-class>controller.admin.rental.DetailRentalController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -168,6 +172,10 @@
     <servlet-mapping>
         <servlet-name>RentalController</servlet-name>
         <url-pattern>/admin/rental</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailRentalController</servlet-name>
+        <url-pattern>/admin/rental/detail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

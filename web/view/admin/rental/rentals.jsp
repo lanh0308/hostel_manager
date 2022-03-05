@@ -83,6 +83,9 @@
                                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase">
                                                State
                                             </th>
+                                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase">
+                                               Action
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -97,35 +100,61 @@
                                                 <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
                                                     ${roomRental.room.roomCategory.name}
                                                 </td>
-                                                <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap" id="price-${serviceCategory.id}">
+                                                <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap" id="price-${roomRental.id}">
                                                     ${roomRental.room.roomCategory.unit_price}
-                                                    <script>
-                                                        var price = ${serviceCategory.unit_price};
-                                                        price = price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
-                                                        $("#price-${serviceCategory.id}").text(price);
-                                                    </script>
                                                 </td>
+                                                <script>
+                                                        var price = ${roomRental.room.roomCategory.unit_price};
+                                                        price = price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+                                                        $("#price-${roomRental.id}").text(price);
+                                                </script>
                                                 <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
-                                                    ${roomRental.room.roomCategory.areage}
+                                                    ${roomRental.room.roomCategory.areage}m&sup2;
                                                 </td>
                                                 <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
                                                     ${roomRental.room.roomCategory.floor_number}
                                                 </td>
                                                 <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
-                                                    ${roomRental.room.roomCategory.is_window}
+                                                    <c:choose>
+                                                        <c:when test="${roomRental.room.roomCategory.is_window}">
+                                                            Có
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Không
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                                 <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
-                                                    ${roomRental.room.roomCategory.is_balcony}
+                                                    <c:choose>
+                                                        <c:when test="${roomRental.room.roomCategory.is_balcony}">
+                                                            Có
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Không
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                                 <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
-                                                    ${roomRental.room.roomCategory.is_kitchen}
+                                                    <c:choose>
+                                                        <c:when test="${roomRental.room.roomCategory.is_kitchen}">
+                                                            Có
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Không
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                                 <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
                                                     ${roomRental.room.roomCategory.desk_number}
                                                 </td>
-                                                <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
+                                                <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap" id="money-${roomRental.id}">
                                                     ${roomRental.deposit_money}
                                                 </td>
+                                                <script>
+                                                        var money = ${roomRental.deposit_money};
+                                                        money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+                                                        $("#money-${roomRental.id}").text(price);
+                                                </script>
                                                 <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
                                                     ${roomRental.start_date}
                                                 </td>
@@ -133,13 +162,23 @@
                                                     ${roomRental.end_date}
                                                 </td>
                                                 <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap">
-                                                    ${roomRental.state}
+                                                    <c:choose>
+                                                        <c:when test="${roomRental.state}">
+                                                            Còn hiệu lực
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Hết hạn
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                                 <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap flex space-x-4">
-                                                    <a href="/admin/rental/edit?id=${serviceCategory.id}" class="text-pink-600 hover:underline">
+                                                    <a href="/admin/rental/detail?id=${roomRental.id}" class="text-pink-600 hover:underline">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                                                    </a>
+                                                    <a href="/admin/rental/edit?id=${roomRental.id}" class="text-pink-600 hover:underline">
                                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                                     </a>
-                                                    <a href="/admin/rental/delete?id=${serviceCategory.id}" class="text-red-600 hover:underline">
+                                                    <a href="/admin/rental/delete?id=${roomRental.id}" class="text-red-600 hover:underline">
                                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                                     </a>
                                                 </td>
