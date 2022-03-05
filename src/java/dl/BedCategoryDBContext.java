@@ -36,7 +36,7 @@ public class BedCategoryDBContext extends DBContext {
                 bedCategorys.add(bc);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(RoomCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BedCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return bedCategorys;
     }

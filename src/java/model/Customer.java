@@ -15,6 +15,15 @@ public class Customer {
     private String phone_number;
     private String address;
     private String email;
+    private String cmnd;
+
+    public String getCmnd() {
+        return cmnd;
+    }
+
+    public void setCmnd(String cmnd) {
+        this.cmnd = cmnd;
+    }
 
     public int getId() {
         return id;

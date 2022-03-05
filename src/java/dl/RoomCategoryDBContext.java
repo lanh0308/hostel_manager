@@ -88,20 +88,20 @@ public class RoomCategoryDBContext extends DBContext {
             stm.setInt(9, roomCategory.getBed_category().getId());
             stm.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(BedCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RoomCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (stm != null) {
                 try {
                     stm.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(BedCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(RoomCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(BedCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(RoomCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -167,20 +167,20 @@ public class RoomCategoryDBContext extends DBContext {
             stm.setInt(10, roomCategory.getID());
             stm.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(BedCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RoomCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (stm != null) {
                 try {
                     stm.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(BedCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(RoomCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(BedCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(RoomCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -197,20 +197,20 @@ public class RoomCategoryDBContext extends DBContext {
 
             stm.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(BedCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RoomCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (stm != null) {
                 try {
                     stm.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(BedCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(RoomCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(BedCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(RoomCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
