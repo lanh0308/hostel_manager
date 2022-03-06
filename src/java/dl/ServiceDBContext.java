@@ -62,7 +62,7 @@ public class ServiceDBContext extends DBContext {
                 service.setState(rs.getBoolean("state"));
 
                 RoomRental roomRental = new RoomRental();
-                roomRental.setId(rs.getInt("id"));
+                roomRental.setId(rs.getInt("room_rental_id"));
                 roomRental.setDeposit_money(rs.getInt("deposit_money"));
                 roomRental.setStart_date(rs.getDate("start_date"));
                 roomRental.setEnd_date(rs.getDate("end_date"));
@@ -134,7 +134,7 @@ public class ServiceDBContext extends DBContext {
                 service.setState(rs.getBoolean("state"));
 
                 RoomRental roomRental = new RoomRental();
-                roomRental.setId(rs.getInt("id"));
+                roomRental.setId(rs.getInt("room_rental_id"));
                 roomRental.setDeposit_money(rs.getInt("deposit_money"));
                 roomRental.setStart_date(rs.getDate("start_date"));
                 roomRental.setEnd_date(rs.getDate("end_date"));
@@ -206,7 +206,7 @@ public class ServiceDBContext extends DBContext {
                 service.setState(rs.getBoolean("state"));
 
                 RoomRental roomRental = new RoomRental();
-                roomRental.setId(rs.getInt("id"));
+                roomRental.setId(rs.getInt("room_rental_id"));
                 roomRental.setDeposit_money(rs.getInt("deposit_money"));
                 roomRental.setStart_date(rs.getDate("start_date"));
                 roomRental.setEnd_date(rs.getDate("end_date"));

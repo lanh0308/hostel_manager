@@ -31,6 +31,18 @@
                                 <thead class="bg-pink-100">
                                     <tr>
                                         <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                            Room
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                            Area
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                            Start date
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                            End date
+                                        </th>
+                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                             Name
                                         </th>
                                         <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
@@ -49,6 +61,18 @@
                                 </thead>
                                 <tbody>
                                     <tr class="bg-white border-b">
+                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            ${roomRental.room.name}
+                                        </td>
+                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            ${roomRental.room.roomCategory.areage}m&sup2;
+                                        </td>
+                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            ${roomRental.start_date}
+                                        </td>
+                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            ${roomRental.end_date}
+                                        </td>
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
                                             ${roomRental.customer.name}
                                         </td>
@@ -118,7 +142,7 @@
                                                     ${service.new_indicator}
                                                 </td>
                                                 <td class="py-4 px-6 text-sm font-medium whitespace-nowrap">
-                                                    <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                                    <a href="/admin/rental/service/edit?id=${service.id}" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
