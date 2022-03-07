@@ -7,6 +7,7 @@ package controller.admin.service;
 
 import com.google.gson.Gson;
 import controller.admin.auth.BaseAuthAdminController;
+import dl.RoomRentalDBContext;
 import dl.ServiceCategoryDBContext;
 import dl.ServiceDBContext;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.RoomRental;
 import model.Service;
 import model.ServiceCategory;
 
@@ -24,7 +26,7 @@ import model.ServiceCategory;
  *
  * @author lanh0
  */
-public class EditServiceController extends BaseAuthAdminController {
+public class AddServiceController extends BaseAuthAdminController {
 
     @Override
     protected boolean isPermission(HttpServletRequest request) {
@@ -35,19 +37,18 @@ public class EditServiceController extends BaseAuthAdminController {
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        ServiceDBContext serviceDB = new ServiceDBContext();
-        Service service = serviceDB.getService(id);
+        RoomRentalDBContext romRentalDBContext = new RoomRentalDBContext();
+        RoomRental roomRental =  romRentalDBContext.getRoomRental(id);
+        request.setAttribute("roomRental", roomRental);
         ServiceCategoryDBContext serviceCategoryDB = new ServiceCategoryDBContext();
         ArrayList<ServiceCategory> serviceCategorys = serviceCategoryDB.getServiceCategorys();
         request.setAttribute("serviceCategorys", serviceCategorys);
-        request.setAttribute("service", service);
-        request.getRequestDispatcher("/view/admin/service/edit.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/admin/service/add.jsp").forward(request, response);
     }
 
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
             int id = Integer.parseInt(request.getParameter("id"));
             String start_date_string = request.getParameter("start_date");
             String end_date_string = request.getParameter("end_date");
@@ -61,29 +62,26 @@ public class EditServiceController extends BaseAuthAdminController {
             Date start_date = Date.valueOf(start_date_string);
             Date end_date = Date.valueOf(end_date_string);
             
+            RoomRentalDBContext roomRentalDB = new RoomRentalDBContext();
+            RoomRental roomRental =  roomRentalDB.getRoomRental(id);
+            
             ServiceCategoryDBContext serviceCategoryDB = new ServiceCategoryDBContext();
             ServiceCategory serviceCategory = serviceCategoryDB.getServiceCategory(service_category);
 
             ServiceDBContext serviceDB = new ServiceDBContext();
-            Service service = serviceDB.getService(id);
+            Service service = new Service();
+            service.setRoom_retal(roomRental);
             service.setService_category(serviceCategory);
             service.setStart_date(start_date);
             service.setEnd_date(end_date);
             service.setNew_indicator(new_indicator);
             service.setOld_indicator(old_indicator);
-
-            serviceDB.updateService(service);
+            
+            serviceDB.insertService(service);
             String json = new Gson().toJson(service);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
-        } catch (Exception e) {
-            String json = new Gson().toJson(new Error(e.getMessage()));
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
-        }
-
     }
 
     /**

@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -83,6 +84,16 @@ public class Service {
 
     public void setState(boolean State) {
         this.State = State;
+    }
+    
+    
+    public BigDecimal getPrice(){
+        int indicator = new_indicator-old_indicator;
+        if(indicator>0){
+            return new BigDecimal(service_category.getUnit_price()*indicator);
+        }else{
+            return new BigDecimal(service_category.getUnit_price());
+        }
     }
     
     

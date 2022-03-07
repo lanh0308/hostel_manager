@@ -5,10 +5,14 @@
  */
 package dl;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.BedCategory;
@@ -76,7 +80,7 @@ public class RoomRentalDBContext extends DBContext {
                 customer.setEmail(rs.getString("email"));
                 customer.setCmnd(rs.getString("cmnd"));
                 roomRental.setCustomer(customer);
-                ArrayList<Service> services = serviceDBContext.findByRoomRental(roomRental.getId());
+                TreeMap<Date,ArrayList<Service>> services = serviceDBContext.findByRoomRental(roomRental.getId());
                 roomRental.setServices(services);
 
                 Room room = new Room();
@@ -160,7 +164,7 @@ public class RoomRentalDBContext extends DBContext {
                 customer.setEmail(rs.getString("email"));
                 customer.setCmnd(rs.getString("cmnd"));
                 roomRental.setCustomer(customer);
-                ArrayList<Service> services = serviceDBContext.findByRoomRental(roomRental.getId());
+                TreeMap<Date,ArrayList<Service>> services = serviceDBContext.findByRoomRental(roomRental.getId());
                 roomRental.setServices(services);
 
                 Room room = new Room();

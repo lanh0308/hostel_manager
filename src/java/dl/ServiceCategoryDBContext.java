@@ -126,6 +126,8 @@ public class ServiceCategoryDBContext extends DBContext {
     }
 
     public void deleteServiceCategory(int id) {
+        ServiceDBContext serviceDBContext = new ServiceDBContext();
+        serviceDBContext.deleteByServiceCategory(id);
         String sql = "DELETE FROM [service_category]\n"
                 + "      WHERE id = ?";
         PreparedStatement stm = null;
@@ -135,22 +137,7 @@ public class ServiceCategoryDBContext extends DBContext {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ServiceCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ServiceCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ServiceCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+        } 
     }
 
 }

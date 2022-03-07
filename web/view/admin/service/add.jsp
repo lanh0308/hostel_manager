@@ -4,6 +4,7 @@
     Author     : lanh0
 --%>
 
+<%@page import="model.RoomRental"%>
 <%@page import="model.Service"%>
 <%@page import="model.ServiceCategory"%>
 <%@page import="model.RoomCategory"%>
@@ -18,7 +19,7 @@
         <title>Edit Page</title>
         <%
             ArrayList<ServiceCategory> serviceCategorys = (ArrayList<ServiceCategory>) request.getAttribute("serviceCategorys");
-            Service service = (Service) request.getAttribute("service");
+            RoomRental roomRental =(RoomRental) request.getAttribute("roomRental");
         %>
     </head>
     <jsp:include page="../base/header.jsp" />
@@ -38,7 +39,7 @@
                                 </a>
                             </li>
                             <li class="inline-flex items-center text-xl">
-                                <a href="/admin/rental/detail?id=${service.room_retal.id}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                                <a href="/admin/rental" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900">
                                     <svg class="w-6 h-6 text-xl" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                                     Rental
                                 </a>
@@ -54,6 +55,7 @@
                 </div>
                 <div class="flex justify-center items-center min-h-screen">
                     <form style="width: 500px" id="form-edit">
+                        <input id="id" name="id" value="${roomRental.id}" type="hidden"/>
                         <div id="error" class="hidden">
                             <div id="error-content" class="bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-red-700 mb-3" role="alert">
                             </div>
@@ -61,7 +63,6 @@
                         <div id="success" class="hidden p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
                             <span id="success-content" class="font-medium"></span>
                         </div>
-                        <input id="id" name="id" value="${service.id}" type="hidden"/>
                         <div class="mb-6">
                             <label for="service_category" class="block mb-2 text-sm font-medium text-gray-900">Service Category</label>
                             <select id="service_category" name="service_category" class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
@@ -79,67 +80,67 @@
                         </div>
                         <div class="mb-6">
                             <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date</label>
-                            <input required type="date" id="start_date" name="start_date" value="${service.start_date}"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                            <input required type="date" id="start_date" name="start_date"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
                         </div>
                         <div class="mb-6">
                             <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900">End Date</label>
-                            <input required type="date" id="end_date" name="end_date" value="${service.end_date}"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                            <input required type="date" id="end_date" name="end_date" class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
                         </div>
                         <div class="mb-6">
                             <label for="old_indicator" class="block mb-2 text-sm font-medium text-gray-900">Old Indicator</label>
-                            <input required type="number" id="old_indicator" name="old_indicator" value="${service.old_indicator}"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                            <input required type="number" id="old_indicator" name="old_indicator""  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
                         </div>
                         <div class="mb-6">
                             <label for="new_indicator" class="block mb-2 text-sm font-medium text-gray-900">New Indicator</label>
-                            <input required type="number" id="new_indicator" name="new_indicator" value="${service.new_indicator}"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                            <input required type="number" id="new_indicator" name="new_indicator"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
                         </div>
                         <button type="submit" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
-    <script>
-        $("#form-edit").on("submit", function(e){
-        e.preventDefault();
-        const data = {
-                id: $("#id").val(),
-                service_category: $("#service_category").val(),
-                start_date: $("#start_date").val(),
-                end_date: $("#end_date").val(),
-                old_indicator: $("#old_indicator").val(),
-                new_indicator: $("#new_indicator").val(),
-        }
-        console.log(data);
-        $.ajax({
-        method: "POST",
-                url: "/admin/rental/service/edit",
-                data: data,
-                statusCode: {
-                404: function() {
-                $("#success").addClass("hidden")
-                        $('#error-content').text("Page not found");
-                $("#error").removeClass("hidden")
-                },
-                        500: function(){
-                        $("#success").addClass("hidden")
-                                $('#error-content').text("Server error");
-                        $("#error").removeClass("hidden")
+        <script>
+            $("#form-edit").on("submit", function(e){
+            e.preventDefault();
+            const data = {
+                    id: $("#id").val(),
+                    service_category: $("#service_category").val(),
+                    start_date: $("#start_date").val(),
+                    end_date: $("#end_date").val(),
+                    old_indicator: $("#old_indicator").val(),
+                    new_indicator: $("#new_indicator").val(),
+            }
+            console.log(data);
+                $.ajax({
+                    method: "POST",
+                    url: "/admin/rental/service/add",
+                    data: data,
+                    statusCode: {
+                    404: function() {
+                            $("#success").addClass("hidden")
+                            $('#error-content').text("Page not found");
+                            $("#error").removeClass("hidden")
+                    },
+                    500: function(){
+                            $("#success").addClass("hidden")
+                            $('#error-content').text("Server error");
+                            $("#error").removeClass("hidden")
                         }
-                }
-        }).done(function(data){
-        if (data?.detailMessage) {
-        $("#success").addClass("hidden")
-                $('#error-content').text(data?.detailMessage);
-        $("#error").removeClass("hidden")
-        } else{
-        $("#error").addClass("hidden")
-                $('#success-content').text("Update success");
-        $("#success").removeClass("hidden")
-        }
-        })
-        })
-    </script>
-</body>
-<jsp:include page="../base/footer.jsp" />
+                    }
+                }).done(function(data){
+                    if (data?.detailMessage) {
+                        $("#success").addClass("hidden")
+                         $('#error-content').text(data?.detailMessage);
+                        $("#error").removeClass("hidden")
+                    } else{
+                        $("#error").addClass("hidden")
+                        $('#success-content').text("Add success");
+                        $("#success").removeClass("hidden")
+                        location.href="/admin/rental/detail?id=${roomRental.id}";
+                    }
+                })
+            })
+        </script>
+    </body>
+    <jsp:include page="../base/footer.jsp" />
 </html>

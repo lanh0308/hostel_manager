@@ -97,6 +97,14 @@
         <servlet-name>EditServiceController</servlet-name>
         <servlet-class>controller.admin.service.EditServiceController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddServiceController</servlet-name>
+        <servlet-class>controller.admin.service.AddServiceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteServiceAdminController</servlet-name>
+        <servlet-class>controller.admin.service.DeleteServiceAdminController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -184,6 +192,14 @@
     <servlet-mapping>
         <servlet-name>EditServiceController</servlet-name>
         <url-pattern>/admin/rental/service/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddServiceController</servlet-name>
+        <url-pattern>/admin/rental/service/add</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteServiceAdminController</servlet-name>
+        <url-pattern>/admin/rental/service/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

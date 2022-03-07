@@ -5,8 +5,13 @@
  */
 package model;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -21,13 +26,13 @@ public class RoomRental {
     private Date start_date;
     private Date end_date;
     private boolean state;
-    private ArrayList<Service> services;
+    private TreeMap<Date,ArrayList<Service>> services;
 
-    public ArrayList<Service> getServices() {
+    public TreeMap<Date,ArrayList<Service>> getServices() {
         return services;
     }
 
-    public void setServices(ArrayList<Service> services) {
+    public void setServices(TreeMap<Date,ArrayList<Service>> services) {
         this.services = services;
     }
     
@@ -85,6 +90,21 @@ public class RoomRental {
     
     public void setState(boolean state) {
         this.state = state;
+    }
+    
+    public BigDecimal getToltalPriceByDate(Date date){
+        BigDecimal toltalPrice = new BigDecimal(0);
+        for (Map.Entry<Date, ArrayList<Service>> entry : services.entrySet()) {
+            Date key = entry.getKey();
+            ArrayList<Service> value = entry.getValue();
+            if(key.equals(date)){
+                for (Service service : value) {
+                    toltalPrice = toltalPrice.add(service.getPrice());
+                }
+                break;
+            }
+        }
+        return toltalPrice.add(new BigDecimal(this.room.getRoomCategory().getUnit_price()));
     }
     
 }

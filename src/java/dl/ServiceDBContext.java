@@ -5,10 +5,16 @@
  */
 package dl;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Customer;
@@ -36,8 +42,8 @@ public class ServiceDBContext extends DBContext {
                     + "	  ,[room_rental].[customer_id]\n"
                     + "	  ,[room_rental].[room_id]\n"
                     + "	  ,[room_rental].[deposit_money]\n"
-                    + "	  ,[room_rental].[start_date]\n"
-                    + "	  ,[room_rental].[end_date]\n"
+                    + "	  ,[room_rental].[start_date] as 'room_rental_start_date'\n"
+                    + "	  ,[room_rental].[end_date] as 'room_rental_end_date'\n"
                     + "	  ,[room_rental].[state]\n"
                     + "	  ,[customer].[name]\n"
                     + "	  ,[customer].[email]\n"
@@ -64,8 +70,8 @@ public class ServiceDBContext extends DBContext {
                 RoomRental roomRental = new RoomRental();
                 roomRental.setId(rs.getInt("room_rental_id"));
                 roomRental.setDeposit_money(rs.getInt("deposit_money"));
-                roomRental.setStart_date(rs.getDate("start_date"));
-                roomRental.setEnd_date(rs.getDate("end_date"));
+                roomRental.setStart_date(rs.getDate("room_rental_start_date"));
+                roomRental.setEnd_date(rs.getDate("room_rental_end_date"));
                 roomRental.setState(rs.getBoolean("state"));
                 Customer customer = new Customer();
                 customer.setId(rs.getInt("customer_id"));
@@ -92,8 +98,8 @@ public class ServiceDBContext extends DBContext {
         return services;
     }
 
-    public ArrayList<Service> findByRoomRental(int roomRentalId) {
-        ArrayList<Service> services = new ArrayList<>();
+    public TreeMap<Date,ArrayList<Service>> findByRoomRental(int roomRentalId) {
+        TreeMap<Date,ArrayList<Service>> services = new TreeMap<>(Collections.reverseOrder());
         try {
             String sql = "SELECT [service].[id]\n"
                     + "      ,[service].[room_rental_id]\n"
@@ -106,8 +112,8 @@ public class ServiceDBContext extends DBContext {
                     + "	  ,[room_rental].[customer_id]\n"
                     + "	  ,[room_rental].[room_id]\n"
                     + "	  ,[room_rental].[deposit_money]\n"
-                    + "	  ,[room_rental].[start_date]\n"
-                    + "	  ,[room_rental].[end_date]\n"
+                    + "	  ,[room_rental].[start_date] as 'room_rental_start_date'\n"
+                    + "	  ,[room_rental].[end_date] as 'room_rental_end_date'\n"
                     + "	  ,[room_rental].[state]\n"
                     + "	  ,[customer].[name]\n"
                     + "	  ,[customer].[email]\n"
@@ -117,10 +123,11 @@ public class ServiceDBContext extends DBContext {
                     + "	  ,[service_category].[name] as 'serviceCategoryName'\n"
                     + "	  ,[service_category].[unit_price] \n"
                     + "  FROM [service] \n"
-                    + "  INNER JOIN [service_category] on [service_category].[id] =  [service].[service_id]\n"
+                    + " INNER JOIN [service_category] on [service_category].[id] =  [service].[service_id]\n"
                     + " INNER JOIN [room_rental] on  [room_rental].[id] = [service].[room_rental_id]\n"
                     + " INNER JOIN [customer] on  [customer].[id] = [room_rental].[customer_id]\n"
-                    + " WHERE [service].[room_rental_id] = ?";
+                    + " WHERE [service].[room_rental_id] = ?\n"
+                    + " ORDER BY [service].[start_date] DESC";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, roomRentalId);
             ResultSet rs = stm.executeQuery();
@@ -136,8 +143,8 @@ public class ServiceDBContext extends DBContext {
                 RoomRental roomRental = new RoomRental();
                 roomRental.setId(rs.getInt("room_rental_id"));
                 roomRental.setDeposit_money(rs.getInt("deposit_money"));
-                roomRental.setStart_date(rs.getDate("start_date"));
-                roomRental.setEnd_date(rs.getDate("end_date"));
+                roomRental.setStart_date(rs.getDate("room_rental_start_date"));
+                roomRental.setEnd_date(rs.getDate("room_rental_end_date"));
                 roomRental.setState(rs.getBoolean("state"));
                 Customer customer = new Customer();
                 customer.setId(rs.getInt("customer_id"));
@@ -155,8 +162,22 @@ public class ServiceDBContext extends DBContext {
 
                 service.setRoom_retal(roomRental);
                 service.setService_category(sc);
-
-                services.add(service);
+                
+                boolean isExit = false;
+                for (Map.Entry<Date, ArrayList<Service>> entry : services.entrySet()) {
+                    Date key = entry.getKey();
+                    ArrayList<Service> value = entry.getValue();
+                    if(key.equals(service.getStart_date())){
+                        value.add(service);
+                        isExit= true;
+                        break;
+                    }
+                }
+                if(!isExit){
+                    ArrayList<Service> new_services = new ArrayList<>();
+                    new_services.add(service);
+                    services.put(service.getStart_date(), new_services);
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -178,8 +199,8 @@ public class ServiceDBContext extends DBContext {
                     + "	  ,[room_rental].[customer_id]\n"
                     + "	  ,[room_rental].[room_id]\n"
                     + "	  ,[room_rental].[deposit_money]\n"
-                    + "	  ,[room_rental].[start_date]\n"
-                    + "	  ,[room_rental].[end_date]\n"
+                    + "	  ,[room_rental].[start_date] as 'room_rental_start_date'\n"
+                    + "	  ,[room_rental].[end_date] as 'room_rental_end_date'\n"
                     + "	  ,[room_rental].[state]\n"
                     + "	  ,[customer].[name]\n"
                     + "	  ,[customer].[email]\n"
@@ -208,8 +229,8 @@ public class ServiceDBContext extends DBContext {
                 RoomRental roomRental = new RoomRental();
                 roomRental.setId(rs.getInt("room_rental_id"));
                 roomRental.setDeposit_money(rs.getInt("deposit_money"));
-                roomRental.setStart_date(rs.getDate("start_date"));
-                roomRental.setEnd_date(rs.getDate("end_date"));
+                roomRental.setStart_date(rs.getDate("room_rental_start_date"));
+                roomRental.setEnd_date(rs.getDate("room_rental_end_date"));
                 roomRental.setState(rs.getBoolean("state"));
                 Customer customer = new Customer();
                 customer.setId(rs.getInt("customer_id"));
@@ -324,21 +345,19 @@ public class ServiceDBContext extends DBContext {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+        } 
+    }
+    
+    public void deleteByServiceCategory(int id) {
+        String sql = "DELETE FROM [service]\n"
+                + " WHERE service_id = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1,id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
 }
