@@ -215,13 +215,14 @@ public class ServiceDBContext extends DBContext {
                     + "INNER JOIN [customer] on  [customer].[id] = [room_rental].[customer_id]) [service]\n"
                     + "INNER JOIN (SELECT [service].[start_date] as 'group_start_date'\n"
                     + ",ROW_NUMBER() OVER (ORDER BY [service].[start_date] DESC) as row_index\n"
-                    + "from [service] GROUP BY [service].[start_date]) [date] ON [date].[group_start_date]=[service].[start_date]\n"
-                    + "WHERE [service].[room_rental_id] = ? AND LOWER([service].[start_date]) LIKE LOWER(?))  [service]\n"
+                    + "FROM [service] WHERE LOWER([service].[start_date]) LIKE LOWER(?)\n"
+                    + "GROUP BY [service].[start_date]) [date] ON [date].[group_start_date]=[service].[start_date]\n"
+                    + "WHERE [service].[room_rental_id] = ?)  [service]\n"
                     + "WHERE row_index >= (? - 1) * ? + 1 AND row_index <= ? * ?\n"
                     + "ORDER BY  [service].[row_index] ASC\n";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, roomRentalId);
-            stm.setString(2, "%" + start_date + "%");
+            stm.setString(1, "%" + start_date + "%");
+            stm.setInt(2, roomRentalId);
             stm.setInt(3, pageIndex);
             stm.setInt(4, pageSize);
             stm.setInt(5, pageIndex);
@@ -454,5 +455,53 @@ public class ServiceDBContext extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public int getSize(int roomRentalId, String start_date) {
+        try {
+            String sql = "SELECT COUNT(*) AS 'size' FROM(SELECT [service].[row_index] FROM (SELECT * FROM (SELECT [service].[id]\n"
+                    + ",[service].[room_rental_id]\n"
+                    + ",[service].[service_id]\n"
+                    + ",[service].[start_date]\n"
+                    + ",[service].[end_date]\n"
+                    + ",[service].[new_indicator]\n"
+                    + ",[service].[old_indicator]\n"
+                    + ",[service].[state]\n"
+                    + " ,[room_rental].[customer_id]\n"
+                    + "  ,[room_rental].[room_id]\n"
+                    + ",[room_rental].[deposit_money]\n"
+                    + " ,[room_rental].[start_date] as 'room_rental_start_date'\n"
+                    + " ,[room_rental].[end_date] as 'room_rental_end_date'\n"
+                    + ",[room_rental].[state] as 'room_reantal_state'\n"
+                    + " ,[customer].[name]\n"
+                    + ",[customer].[email]\n"
+                    + ",[customer].[phone_number]\n"
+                    + ",[customer].[cmnd]\n"
+                    + " ,[customer].[address]\n"
+                    + ",[service_category].[name] as 'serviceCategoryName'\n"
+                    + ",[service_category].[unit_price] \n"
+                    + " FROM [service] \n"
+                    + "INNER JOIN [service_category] on [service_category].[id] =  [service].[service_id]\n"
+                    + "INNER JOIN [room_rental] on  [room_rental].[id] = [service].[room_rental_id]\n"
+                    + "INNER JOIN [customer] on  [customer].[id] = [room_rental].[customer_id]) [service]\n"
+                    + "INNER JOIN (SELECT [service].[start_date] as 'group_start_date'\n"
+                    + ",ROW_NUMBER() OVER (ORDER BY [service].[start_date] DESC) as row_index\n"
+                    + "FROM [service] WHERE LOWER([service].[start_date]) LIKE LOWER(?)\n"
+                    + "GROUP BY [service].[start_date]) [date] ON [date].[group_start_date]=[service].[start_date]\n"
+                    + "WHERE [service].[room_rental_id] = ?)  [service]\n"
+                    + "GROUP BY [service].[row_index]) [service]\n";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, "%"+start_date+"%");
+            stm.setInt(2, roomRentalId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                int size = rs.getInt("size");
+                return size;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+
     }
 }

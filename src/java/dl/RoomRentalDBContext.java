@@ -392,8 +392,4 @@ public class RoomRentalDBContext extends DBContext {
             }
         }
     }
-
-    public int getSize() {
-        return 1;
-    }
 }

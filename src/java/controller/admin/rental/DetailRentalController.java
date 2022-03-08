@@ -7,6 +7,7 @@ package controller.admin.rental;
 
 import controller.admin.auth.BaseAuthAdminController;
 import dl.RoomRentalDBContext;
+import dl.ServiceDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -50,7 +51,9 @@ public class DetailRentalController extends BaseAuthAdminController {
         }
         int id = Integer.parseInt(idString);
         RoomRentalDBContext roomRentalDB = new RoomRentalDBContext();
-        Pagination pagination = new Pagination(pageIndex, pageSize, roomRentalDB.getSize());
+        ServiceDBContext serviceDB = new ServiceDBContext();
+        System.out.println(serviceDB.getSize(id, search));
+        Pagination pagination = new Pagination(pageIndex, pageSize, serviceDB.getSize(id, search));
         RoomRental roomRental = roomRentalDB.getRoomRentalBySearch(id, search, pageIndex, pageSize);
         request.setAttribute("roomRental", roomRental);
         request.setAttribute("pagination", pagination);
