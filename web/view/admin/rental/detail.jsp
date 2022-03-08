@@ -4,6 +4,8 @@
     Author     : lanh0
 --%>
 
+<%@page import="java.sql.Date"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="model.Pagination"%>
 <%@page import="model.RoomRental"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -17,6 +19,8 @@
         <%
             RoomRental roomRental = (RoomRental) request.getAttribute("roomRental");
             Pagination pagination = (Pagination) request.getAttribute("pagination");
+            ArrayList<Date> start_dates = (ArrayList<Date>)request.getAttribute("start_dates");
+            ArrayList<Date> end_dates = (ArrayList<Date>)request.getAttribute("end_dates");
         %>
     </head>
     <jsp:include page="../base/header.jsp" />

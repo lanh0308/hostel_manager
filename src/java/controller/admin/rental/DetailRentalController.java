@@ -10,6 +10,8 @@ import dl.RoomRentalDBContext;
 import dl.ServiceDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,9 +35,13 @@ public class DetailRentalController extends BaseAuthAdminController {
         String idString = request.getParameter("id");
         int pageSize = 3;
         String page = request.getParameter("page");
-        String search = request.getParameter("search");
-        if (search == null) {
-            search = "";
+        String start_date = request.getParameter("start_date");
+        String end_date = request.getParameter("end_date");
+        if (start_date == null) {
+            start_date = "";
+        }
+        if (end_date == null) {
+            end_date = "";
         }
         if (page == null || page.trim().length() == 0) {
             page = "1";
@@ -52,11 +58,14 @@ public class DetailRentalController extends BaseAuthAdminController {
         int id = Integer.parseInt(idString);
         RoomRentalDBContext roomRentalDB = new RoomRentalDBContext();
         ServiceDBContext serviceDB = new ServiceDBContext();
-        System.out.println(serviceDB.getSize(id, search));
-        Pagination pagination = new Pagination(pageIndex, pageSize, serviceDB.getSize(id, search));
-        RoomRental roomRental = roomRentalDB.getRoomRentalBySearch(id, search, pageIndex, pageSize);
+        ArrayList<Date> start_dates = serviceDB.getAllStartDate(id);
+        ArrayList<Date> end_dates = serviceDB.getAllEndDate(id);
+        Pagination pagination = new Pagination(pageIndex, pageSize, serviceDB.getSize(id, start_date, end_date));
+        RoomRental roomRental = roomRentalDB.getRoomRentalBySearch(id, start_date, end_date, pageIndex, pageSize);
         request.setAttribute("roomRental", roomRental);
         request.setAttribute("pagination", pagination);
+        request.setAttribute("start_dates", start_dates);
+        request.setAttribute("end_dates", end_dates);
         request.getRequestDispatcher("/view/admin/rental/detail.jsp").forward(request, response);
     }
 

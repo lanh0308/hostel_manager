@@ -185,7 +185,7 @@ public class ServiceDBContext extends DBContext {
         return services;
     }
 
-    public TreeMap<Date, ArrayList<Service>> findByRoomRentalAndSerach(int roomRentalId, String start_date, int pageIndex, int pageSize) {
+    public TreeMap<Date, ArrayList<Service>> findByRoomRentalAndSerach(int roomRentalId,String start_date, String end_date, int pageIndex, int pageSize) {
         TreeMap<Date, ArrayList<Service>> services = new TreeMap<>(Collections.reverseOrder());
         try {
             String sql = "SELECT * FROM (SELECT * FROM (SELECT [service].[id]\n"
@@ -215,18 +215,19 @@ public class ServiceDBContext extends DBContext {
                     + "INNER JOIN [customer] on  [customer].[id] = [room_rental].[customer_id]) [service]\n"
                     + "INNER JOIN (SELECT [service].[start_date] as 'group_start_date'\n"
                     + ",ROW_NUMBER() OVER (ORDER BY [service].[start_date] DESC) as row_index\n"
-                    + "FROM [service] WHERE LOWER([service].[start_date]) LIKE LOWER(?)\n"
+                    + "FROM [service] WHERE LOWER([service].[start_date]) LIKE LOWER(?) OR LOWER([service].[end_date]) LIKE LOWER(?)\n"
                     + "GROUP BY [service].[start_date]) [date] ON [date].[group_start_date]=[service].[start_date]\n"
                     + "WHERE [service].[room_rental_id] = ?)  [service]\n"
                     + "WHERE row_index >= (? - 1) * ? + 1 AND row_index <= ? * ?\n"
                     + "ORDER BY  [service].[row_index] ASC\n";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, "%" + start_date + "%");
-            stm.setInt(2, roomRentalId);
-            stm.setInt(3, pageIndex);
-            stm.setInt(4, pageSize);
-            stm.setInt(5, pageIndex);
-            stm.setInt(6, pageSize);
+            stm.setString(2, "%" + end_date + "%");
+            stm.setInt(3, roomRentalId);
+            stm.setInt(4, pageIndex);
+            stm.setInt(5, pageSize);
+            stm.setInt(6, pageIndex);
+            stm.setInt(7, pageSize);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Service service = new Service();
@@ -457,7 +458,7 @@ public class ServiceDBContext extends DBContext {
         }
     }
 
-    public int getSize(int roomRentalId, String start_date) {
+    public int getSize(int roomRentalId, String start_date, String end_date) {
         try {
             String sql = "SELECT COUNT(*) AS 'size' FROM(SELECT [service].[row_index] FROM (SELECT * FROM (SELECT [service].[id]\n"
                     + ",[service].[room_rental_id]\n"
@@ -486,13 +487,14 @@ public class ServiceDBContext extends DBContext {
                     + "INNER JOIN [customer] on  [customer].[id] = [room_rental].[customer_id]) [service]\n"
                     + "INNER JOIN (SELECT [service].[start_date] as 'group_start_date'\n"
                     + ",ROW_NUMBER() OVER (ORDER BY [service].[start_date] DESC) as row_index\n"
-                    + "FROM [service] WHERE LOWER([service].[start_date]) LIKE LOWER(?)\n"
+                    + "FROM [service] WHERE LOWER([service].[start_date]) LIKE LOWER(?) OR LOWER([service].[end_date]) LIKE LOWER(?)\n"
                     + "GROUP BY [service].[start_date]) [date] ON [date].[group_start_date]=[service].[start_date]\n"
                     + "WHERE [service].[room_rental_id] = ?)  [service]\n"
                     + "GROUP BY [service].[row_index]) [service]\n";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, "%"+start_date+"%");
-            stm.setInt(2, roomRentalId);
+            stm.setString(1, "%" + start_date + "%");
+            stm.setString(2, "%" + end_date+"%");
+            stm.setInt(3, roomRentalId);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 int size = rs.getInt("size");
@@ -502,6 +504,45 @@ public class ServiceDBContext extends DBContext {
             Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
+    }
 
+    public ArrayList<Date> getAllStartDate(int id) {
+        ArrayList<Date> start_dates = new ArrayList<>();
+        try {
+            String sql = " SELECT [service].[start_date] \n"
+                    + ",ROW_NUMBER() OVER (ORDER BY [service].[start_date] DESC) as row_index\n"
+                    + "From [service] \n"
+                    + "WHERE  [service].[room_rental_id] = ?"
+                    + "GROUP BY [service].[start_date]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                start_dates.add(rs.getDate("start_date"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return start_dates;
+    }
+
+    public ArrayList<Date> getAllEndDate(int id) {
+        ArrayList<Date> start_dates = new ArrayList<>();
+        try {
+            String sql = " SELECT [service].[end_date]\n"
+                    + ",ROW_NUMBER() OVER (ORDER BY [service].[end_date] DESC) as row_index\n"
+                    + "From [service] \n"
+                    + " WHERE  [service].[room_rental_id] = ?"
+                    + "GROUP BY [service].[end_date]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                start_dates.add(rs.getDate("end_date"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return start_dates;
     }
 }

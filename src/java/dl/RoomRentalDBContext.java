@@ -198,7 +198,7 @@ public class RoomRentalDBContext extends DBContext {
         return null;
     }
 
-    public RoomRental getRoomRentalBySearch(int id, String start_date, int pageIndex, int pageSize) {
+    public RoomRental getRoomRentalBySearch(int id, String start_date,String end_date ,int pageIndex, int pageSize) {
         ArrayList<RoomRental> roomRentals = new ArrayList<>();
         ServiceDBContext serviceDBContext = new ServiceDBContext();
         try {
@@ -251,7 +251,7 @@ public class RoomRentalDBContext extends DBContext {
                 customer.setEmail(rs.getString("email"));
                 customer.setCmnd(rs.getString("cmnd"));
                 roomRental.setCustomer(customer);
-                TreeMap<Date, ArrayList<Service>> services = serviceDBContext.findByRoomRentalAndSerach(roomRental.getId(), start_date, pageIndex, pageSize);
+                TreeMap<Date, ArrayList<Service>> services = serviceDBContext.findByRoomRentalAndSerach(roomRental.getId(), start_date, end_date,pageIndex, pageSize);
                 roomRental.setServices(services);
 
                 Room room = new Room();
