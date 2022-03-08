@@ -38,7 +38,7 @@ public class AddServiceController extends BaseAuthAdminController {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         RoomRentalDBContext romRentalDBContext = new RoomRentalDBContext();
-        RoomRental roomRental =  romRentalDBContext.getRoomRental(id);
+        RoomRental roomRental = romRentalDBContext.getRoomRental(id);
         request.setAttribute("roomRental", roomRental);
         ServiceCategoryDBContext serviceCategoryDB = new ServiceCategoryDBContext();
         ArrayList<ServiceCategory> serviceCategorys = serviceCategoryDB.getServiceCategorys();
@@ -49,39 +49,39 @@ public class AddServiceController extends BaseAuthAdminController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            int id = Integer.parseInt(request.getParameter("id"));
-            String start_date_string = request.getParameter("start_date");
-            String end_date_string = request.getParameter("end_date");
-            String old_indicator_string = request.getParameter("old_indicator");
-            String new_indicator_string = request.getParameter("new_indicator");
-            String service_category_string = request.getParameter("service_category");
-            int old_indicator = Integer.parseInt(old_indicator_string);
-            int new_indicator = Integer.parseInt(new_indicator_string);
-            int service_category = Integer.parseInt(service_category_string);
+        int id = Integer.parseInt(request.getParameter("id"));
+        String start_date_string = request.getParameter("start_date");
+        String end_date_string = request.getParameter("end_date");
+        String old_indicator_string = request.getParameter("old_indicator");
+        String new_indicator_string = request.getParameter("new_indicator");
+        String service_category_string = request.getParameter("service_category");
+        int old_indicator = Integer.parseInt(old_indicator_string);
+        int new_indicator = Integer.parseInt(new_indicator_string);
+        int service_category = Integer.parseInt(service_category_string);
 
-            Date start_date = Date.valueOf(start_date_string);
-            Date end_date = Date.valueOf(end_date_string);
-            
-            RoomRentalDBContext roomRentalDB = new RoomRentalDBContext();
-            RoomRental roomRental =  roomRentalDB.getRoomRental(id);
-            
-            ServiceCategoryDBContext serviceCategoryDB = new ServiceCategoryDBContext();
-            ServiceCategory serviceCategory = serviceCategoryDB.getServiceCategory(service_category);
+        Date start_date = Date.valueOf(start_date_string);
+        Date end_date = Date.valueOf(end_date_string);
 
-            ServiceDBContext serviceDB = new ServiceDBContext();
-            Service service = new Service();
-            service.setRoom_retal(roomRental);
-            service.setService_category(serviceCategory);
-            service.setStart_date(start_date);
-            service.setEnd_date(end_date);
-            service.setNew_indicator(new_indicator);
-            service.setOld_indicator(old_indicator);
-            
-            serviceDB.insertService(service);
-            String json = new Gson().toJson(service);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
+        RoomRentalDBContext roomRentalDB = new RoomRentalDBContext();
+        RoomRental roomRental = roomRentalDB.getRoomRental(id);
+
+        ServiceCategoryDBContext serviceCategoryDB = new ServiceCategoryDBContext();
+        ServiceCategory serviceCategory = serviceCategoryDB.getServiceCategory(service_category);
+
+        ServiceDBContext serviceDB = new ServiceDBContext();
+        Service service = new Service();
+        service.setRoom_retal(roomRental);
+        service.setService_category(serviceCategory);
+        service.setStart_date(start_date);
+        service.setEnd_date(end_date);
+        service.setNew_indicator(new_indicator);
+        service.setOld_indicator(old_indicator);
+
+        serviceDB.insertService(service);
+        String json = new Gson().toJson(service);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
     }
 
     /**

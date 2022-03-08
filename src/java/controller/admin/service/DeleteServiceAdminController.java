@@ -6,6 +6,7 @@
 package controller.admin.service;
 
 import controller.admin.auth.BaseAuthAdminController;
+import dl.ServiceDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -26,7 +27,10 @@ public class DeleteServiceAdminController extends BaseAuthAdminController {
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        int id = Integer.parseInt(request.getParameter("id"));
+        ServiceDBContext serviceDB = new ServiceDBContext();
+        serviceDB.deleteService(id);
+        response.sendRedirect(request.getHeader("referer"));
     }
 
    
