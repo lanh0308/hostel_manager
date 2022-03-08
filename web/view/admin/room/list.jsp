@@ -27,9 +27,6 @@
             </div>
             <div class="w-full px-10 py-5">
                 <div class="mb-6 flex items-center">
-                    <div>
-                        
-                    </div>
                     <a href="/admin/room/add" class="ml-auto inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Add room</a>
                 </div>
                 <div class="w-full grid lg:grid-cols-4 xl:grid-cols-6 gap-4">

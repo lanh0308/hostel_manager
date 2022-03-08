@@ -19,8 +19,8 @@
         <%
             RoomRental roomRental = (RoomRental) request.getAttribute("roomRental");
             Pagination pagination = (Pagination) request.getAttribute("pagination");
-            ArrayList<Date> start_dates = (ArrayList<Date>)request.getAttribute("start_dates");
-            ArrayList<Date> end_dates = (ArrayList<Date>)request.getAttribute("end_dates");
+            ArrayList<Date> start_dates = (ArrayList<Date>) request.getAttribute("start_dates");
+            ArrayList<Date> end_dates = (ArrayList<Date>) request.getAttribute("end_dates");
         %>
     </head>
     <jsp:include page="../base/header.jsp" />
@@ -56,15 +56,25 @@
             <div class="flex flex-col mb-6 ">
                 <div class="flex justify-between items-center">
                     <div>
-                        <label for="table-search" class="sr-only">Search</label>
-                        <form form="/admin/rental/detail?id=2" method="GET">
+                        <form form="/admin/rental/detail?id=2" method="GET" class="flex items-center">
                             <input type="hidden" id="id" value="${roomRental.id}" name="id"/>
-                            <div class="relative mt-1">
-                                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                    <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-                                </div>
-                                <input type="text" name="search" id="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5" placeholder="Search date">
+                            <div>
+                                <select id="start_date" name="start_date" class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-[120px] p-2.5">
+                                    <option value="">Start date</option>
+                                    <c:forEach items="${start_dates}" var="start_date">
+                                        <option value="${start_date}">${start_date}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
+                            <div class="ml-3">
+                                <select id="end_date" name="end_date" class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-[120px] p-2.5">
+                                    <option value="">End date</option>
+                                    <c:forEach items="${end_dates}" var="end_date">
+                                        <option value="${end_date}">${end_date}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <button type="submit" class="ml-2 inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Search</button>
                         </form>
                     </div>
                     <div class="flex justify-end">

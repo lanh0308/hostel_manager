@@ -37,12 +37,6 @@ public class DetailRentalController extends BaseAuthAdminController {
         String page = request.getParameter("page");
         String start_date = request.getParameter("start_date");
         String end_date = request.getParameter("end_date");
-        if (start_date == null) {
-            start_date = "";
-        }
-        if (end_date == null) {
-            end_date = "";
-        }
         if (page == null || page.trim().length() == 0) {
             page = "1";
         }
@@ -60,6 +54,21 @@ public class DetailRentalController extends BaseAuthAdminController {
         ServiceDBContext serviceDB = new ServiceDBContext();
         ArrayList<Date> start_dates = serviceDB.getAllStartDate(id);
         ArrayList<Date> end_dates = serviceDB.getAllEndDate(id);
+        if (start_date == null || start_date.trim().isEmpty()) {
+            if (start_dates.size() > 0) {
+                start_date = start_dates.get(0).toString();
+            } else {
+                start_date = "";
+            }
+
+        }
+        if (end_date == null || end_date.trim().isEmpty()) {
+            if (end_dates.size() > 0) {
+                end_date = end_dates.get(end_dates.size() - 1).toString();
+            } else {
+                end_date = "";
+            }
+        }
         Pagination pagination = new Pagination(pageIndex, pageSize, serviceDB.getSize(id, start_date, end_date));
         RoomRental roomRental = roomRentalDB.getRoomRentalBySearch(id, start_date, end_date, pageIndex, pageSize);
         request.setAttribute("roomRental", roomRental);
