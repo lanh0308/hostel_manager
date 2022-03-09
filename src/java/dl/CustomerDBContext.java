@@ -103,7 +103,7 @@ public class CustomerDBContext extends DBContext {
                 id = rs.getInt(1);
                 System.out.println(id);
                 return getCustomer(id);
-            } 
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -127,24 +127,22 @@ public class CustomerDBContext extends DBContext {
 
     public void updateCustomer(Customer c) {
         String sql = "UPDATE [customer]\n"
-                + "   SET ([name]\n"
-                + "           ,[phone_number]\n"
-                + "           ,[address]\n"
-                + "           ,[email]\n"
-                + "           ,[cmnd])\n"
-                + "     VALUES(?,?,?,?,?)\n"
-                + "where id = ?";
+                + "   SET [name] = ?\n"
+                + "  ,[phone_number] = ?\n"
+                + "  ,[address] = ?\n"
+                + "  ,[email] = ?\n"
+                + "  ,[cmnd] =?\n"
+                + " where id = ?";
 
         PreparedStatement stm = null;
         try {
             stm = connection.prepareStatement(sql);
-            stm.setInt(6, c.getId());
             stm.setString(1, c.getName());
             stm.setString(2, c.getPhone_number());
             stm.setString(3, c.getAddress());
             stm.setString(4, c.getEmail());
             stm.setString(5, c.getCmnd());
-
+            stm.setInt(6, c.getId());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);

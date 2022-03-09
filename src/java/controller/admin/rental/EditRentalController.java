@@ -12,7 +12,6 @@ import dl.RoomRentalDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,26 +25,27 @@ import model.RoomRental;
  *
  * @author lanh0
  */
-public class AddRentalController extends BaseAuthAdminController {
+public class EditRentalController extends BaseAuthAdminController {
 
     @Override
     protected boolean isPermission(HttpServletRequest request) {
         return true;
     }
-    
+
     @Override
-    protected void processGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
         RoomDBContext roomDB = new RoomDBContext();
         ArrayList<Room> rooms = roomDB.getRoomsEmpty();
         request.setAttribute("rooms", rooms);
-        request.getRequestDispatcher("/view/admin/rental/add.jsp").forward(request, response);
+        RoomRentalDBContext roomRentalDB = new RoomRentalDBContext();
+        RoomRental roomRental = roomRentalDB.getRoomRental(id);
+        request.setAttribute("roomRental", roomRental);
+        request.getRequestDispatcher("/view/admin/rental/edit.jsp").forward(request, response);
     }
 
-    
     @Override
-    protected void processPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String roomId = request.getParameter("room");
         String name = new String(request.getParameter("name").getBytes("iso-8859-1"), "utf-8");
         String phone_number = request.getParameter("phone_number");
@@ -55,31 +55,35 @@ public class AddRentalController extends BaseAuthAdminController {
         String start_date = request.getParameter("start_date");
         String end_date = request.getParameter("end_date");
         String deposit_money = request.getParameter("deposit_money");
+        String state = request.getParameter("state");
+        int idCustomer = Integer.parseInt(request.getParameter("idCustomer"));
+        int idRoomRental = Integer.parseInt(request.getParameter("idRoomRental"));
+        
+        boolean is_state = state !=null && state.equalsIgnoreCase("true");
         
         int idRoom = Integer.parseInt(roomId);
         RoomDBContext roomDB = new RoomDBContext();
         Room room = roomDB.getRoom(idRoom);
         
-        Customer customer = new Customer();
+        CustomerDBContext customerDB = new CustomerDBContext();
+        Customer customer = customerDB.getCustomer(idCustomer);
         customer.setName(name);
         customer.setPhone_number(phone_number);
         customer.setAddress(address);
         customer.setEmail(email);
         customer.setCmnd(cmnd);
         
-        CustomerDBContext customerDB = new CustomerDBContext();
-        Customer new_customer = customerDB.insertCustomer(customer);
+        customerDB.updateCustomer(customer);
         
-        RoomRental roomRental = new RoomRental();
-        roomRental.setCustomer(new_customer);
+        RoomRentalDBContext roomRentalDB = new RoomRentalDBContext();
+        RoomRental roomRental = roomRentalDB.getRoomRental(idRoomRental);
+        roomRental.setCustomer(customer);
         roomRental.setRoom(room);
         roomRental.setStart_date(Date.valueOf(start_date));
         roomRental.setEnd_date(Date.valueOf(end_date));
-        roomRental.setState(true);
+        roomRental.setState(is_state);
         roomRental.setDeposit_money(Integer.parseInt(deposit_money));
-        
-        RoomRentalDBContext roomRentalDB = new RoomRentalDBContext();
-        roomRentalDB.insertRoomRental(roomRental);
+        roomRentalDB.updateRoomRental(roomRental);
         response.sendRedirect("/admin/rental");
     }
 
@@ -92,6 +96,5 @@ public class AddRentalController extends BaseAuthAdminController {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 
 }

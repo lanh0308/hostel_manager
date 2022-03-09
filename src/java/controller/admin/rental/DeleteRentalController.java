@@ -3,37 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.admin.room;
+package controller.admin.rental;
 
 import controller.admin.auth.BaseAuthAdminController;
-import dl.RoomDBContext;
+import dl.RoomRentalDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Room;
 
 /**
  *
  * @author lanh0
  */
-public class RoomController extends BaseAuthAdminController {
+public class DeleteRentalController extends BaseAuthAdminController {
 
-    @Override
+     @Override
     protected boolean isPermission(HttpServletRequest request) {
         return true;
     }
-    
+
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RoomDBContext roomDB = new RoomDBContext();
-        ArrayList<Room> rooms = roomDB.getAllRooms();
-        request.setAttribute("rooms", rooms);
-        request.getRequestDispatcher("/view/admin/room/list.jsp").forward(request, response);
+        int id = Integer.parseInt(request.getParameter("id"));
+        RoomRentalDBContext roomRentalDB = new RoomRentalDBContext();
+        roomRentalDB.deleteService(id);
+        response.sendRedirect(request.getHeader("referer"));
     }
 
     
@@ -60,6 +58,5 @@ public class RoomController extends BaseAuthAdminController {
         return "Short description";
     }// </editor-fold>
 
-   
-
 }
+    

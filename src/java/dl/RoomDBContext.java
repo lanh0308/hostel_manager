@@ -75,6 +75,60 @@ public class RoomDBContext extends DBContext {
         return rooms;
     }
 
+    public ArrayList<Room> getAllRooms() {
+        ArrayList<Room> rooms = new ArrayList<>();
+        RoomCategoryDBContext roomCategoryDB = new RoomCategoryDBContext();
+        try {
+            String sql = "SELECT [room_rental].[id] as 'room_rental_id'\n"
+                    + "	,[room].[id] as 'roomId'\n"
+                    + "    ,[room].[name] as 'roomName'\n"
+                    + "    ,[room].[categoryId]\n"
+                    + "    ,[room_category].[name] as 'roomCategoryName'\n"
+                    + "    ,[room_category].[unit_price]\n"
+                    + "    ,[room_category].[areage]\n"
+                    + "    ,[room_category].[floor_number]\n"
+                    + "    ,[room_category].[is_window]\n"
+                    + "    ,[room_category].[is_balcony]\n"
+                    + "    ,[room_category].[is_kitchen]\n"
+                    + "    ,[room_category].[desk_number]\n"
+                    + "    ,[room_category].[id_bed_category]\n"
+                    + "    ,[bed_category].[name] as 'bedCategoryName' \n"
+                    + "    FROM [room_rental]\n"
+                    + "    INNER JOIN [customer] on [room_rental].[customer_id] = [customer].[id]\n"
+                    + "    RIGHT JOIN [room] on [room_rental].[room_id] = [room].[id]\n"
+                    + "    INNER JOIN [room_category] on [room].[categoryId] = [room_category].[id]\n"
+                    + "    INNER JOIN [bed_category] on [room_category].[id_bed_category] = [bed_category].[id]";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Room room = new Room();
+                room.setIsEmpty(rs.getInt("room_rental_id")==0);
+                room.setId(rs.getInt("roomId"));
+                room.setName(rs.getString("roomName"));
+                RoomCategory rc = new RoomCategory();
+                rc.setID(rs.getInt("categoryId"));
+                rc.setName(rs.getString("roomCategoryName"));
+                rc.setUnit_price(rs.getInt("unit_price"));
+                rc.setAreage(rs.getInt("areage"));
+                rc.setFloor_number(rs.getInt("floor_number"));
+                rc.setIs_window(rs.getBoolean("is_window"));
+                rc.setIs_balcony(rs.getBoolean("is_balcony"));
+                rc.setIs_kitchen(rs.getBoolean("is_kitchen"));
+                rc.setDesk_number(rs.getInt("desk_number"));
+                BedCategory bc = new BedCategory();
+                bc.setId(rs.getInt("id_bed_category"));
+                bc.setName(rs.getString("bedCategoryName"));
+                rc.setBed_category(bc);
+                room.setRoomCategory(rc);
+                rooms.add(room);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rooms;
+    }
+
     public ArrayList<Room> getRooms() {
         ArrayList<Room> rooms = new ArrayList<>();
         RoomCategoryDBContext roomCategoryDB = new RoomCategoryDBContext();

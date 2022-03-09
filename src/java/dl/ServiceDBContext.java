@@ -445,6 +445,19 @@ public class ServiceDBContext extends DBContext {
         }
     }
 
+    public void deleteServiceByRoomRental(int id) {
+        String sql = "DELETE FROM [service]\n"
+                + " WHERE room_rental_id = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void deleteByServiceCategory(int id) {
         String sql = "DELETE FROM [service]\n"
                 + " WHERE service_id = ?";

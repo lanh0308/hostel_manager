@@ -12,7 +12,16 @@ package model;
 public class Room {
     private int id;
     private String name;
+    private boolean isEmpty;
     private RoomCategory roomCategory;
+
+    public boolean isIsEmpty() {
+        return isEmpty;
+    }
+
+    public void setIsEmpty(boolean isEmpty) {
+        this.isEmpty = isEmpty;
+    }
 
     public int getId() {
         return id;

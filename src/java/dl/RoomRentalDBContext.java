@@ -328,23 +328,23 @@ public class RoomRentalDBContext extends DBContext {
     public void updateRoomRental(RoomRental rr) {
 
         String sql = "UPDATE [room_rental]\n"
-                + "      SET([customer_id]\n"
-                + "         ,[room_id]\n"
-                + "         ,[deposit_money]\n"
-                + "         ,[start_date]\n"
-                + "         ,[end_date]\n"
-                + "         ,[state])\n"
-                + "     VALUES(?,?,?,?,?,?)\n"
-                + "where id = ?";
+                + "     SET [customer_id]=?\n"
+                + "         ,[room_id]=?\n"
+                + "         ,[deposit_money]=?\n"
+                + "         ,[start_date]=?\n"
+                + "         ,[end_date]=?\n"
+                + "         ,[state]=?\n"
+                + " where id = ?";
         PreparedStatement stm = null;
         try {
-            stm.setInt(7, rr.getId());
+            stm = connection.prepareStatement(sql);
             stm.setInt(1, rr.getCustomer().getId());
             stm.setInt(2, rr.getRoom().getId());
             stm.setInt(3, rr.getDeposit_money());
             stm.setDate(4, rr.getStart_date());
-            stm.setDate(4, rr.getEnd_date());
+            stm.setDate(5, rr.getEnd_date());
             stm.setBoolean(6, rr.isState());
+            stm.setInt(7, rr.getId());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(RoomRentalDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -367,8 +367,11 @@ public class RoomRentalDBContext extends DBContext {
     }
 
     public void deleteService(int id) {
+        ServiceDBContext serviceDBContext = new ServiceDBContext();
+        serviceDBContext.deleteServiceByRoomRental(id);
         String sql = "DELETE FROM [room_rental]\n"
                 + " WHERE id = ?";
+        
         PreparedStatement stm = null;
         try {
             stm = connection.prepareStatement(sql);

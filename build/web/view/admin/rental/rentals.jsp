@@ -171,7 +171,7 @@
                                         <script>
                                             var money = ${roomRental.deposit_money};
                                             money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
-                                            $("#money-${roomRental.id}").text(price);
+                                            $("#money-${roomRental.id}").text(money);
                                         </script>
                                         <td class="py-4 px-6 text-sm text-gray-900 font-medium whitespace-nowrap">
                                             ${roomRental.start_date}

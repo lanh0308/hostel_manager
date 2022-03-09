@@ -31,7 +31,11 @@
                 </div>
                 <div class="w-full grid lg:grid-cols-4 xl:grid-cols-6 gap-4">
                     <c:forEach items="${rooms}" var="room">
-                        <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
+                        <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md 
+                             <c:if test="${!room.isEmpty}">
+                                 bg-pink-100
+                             </c:if>
+                             ">
                             <div class="flex justify-end px-4 pt-4">
                                 <button id="dropdownButton" data-dropdown-toggle="dropdown-${room.id}" class="hidden sm:inline-block text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm p-1.5" type="button">
                                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
@@ -50,6 +54,14 @@
                             <div class="flex flex-col items-center pb-10">
                                 <h3 class="mb-1 text-xl font-medium text-gray-900">${room.name}</h3>
                                 <span class="text-sm text-gray-500">${room.roomCategory.name}</span>
+                                <c:choose>
+                                    <c:when test="${!room.isEmpty}">
+                                        <span class="text-sm text-red-500">Phòng đã cho thuê</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="text-sm text-green-500">Phòng đang trống</span>
+                                    </c:otherwise>
+                                </c:choose>
                                 <span class="text-md font-medium text-blue-500" id="price-${room.id}">${room.roomCategory.unit_price}</span>
                                 <script>
                                     var price = ${room.roomCategory.unit_price};
