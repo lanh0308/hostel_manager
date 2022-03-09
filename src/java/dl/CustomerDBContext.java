@@ -79,25 +79,31 @@ public class CustomerDBContext extends DBContext {
         return null;
     }
 
-    public void insertCustomer(Customer c) {
+    public Customer insertCustomer(Customer c) {
+        int id = 1;
         String sql = "INSERT INTO [customer]\n"
                 + "           ([name]\n"
                 + "           ,[phone_number]\n"
                 + "           ,[address]\n"
                 + "           ,[email]\n"
                 + "           ,[cmnd])\n"
-                + "     VALUES(?,?,?,?,?)";
+                + "     VALUES(?,?,?,?,?);";
 
         PreparedStatement stm = null;
         try {
-            stm = connection.prepareStatement(sql);
+            stm = connection.prepareStatement(sql, stm.RETURN_GENERATED_KEYS);
             stm.setString(1, c.getName());
             stm.setString(2, c.getPhone_number());
             stm.setString(3, c.getAddress());
             stm.setString(4, c.getEmail());
             stm.setString(5, c.getCmnd());
-
             stm.executeUpdate();
+            ResultSet rs = stm.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+                System.out.println(id);
+                return getCustomer(id);
+            } 
         } catch (SQLException ex) {
             Logger.getLogger(CustomerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -116,9 +122,10 @@ public class CustomerDBContext extends DBContext {
                 }
             }
         }
+        return null;
     }
-    
-     public void updateCustomer(Customer c) {
+
+    public void updateCustomer(Customer c) {
         String sql = "UPDATE [customer]\n"
                 + "   SET ([name]\n"
                 + "           ,[phone_number]\n"
@@ -158,8 +165,8 @@ public class CustomerDBContext extends DBContext {
             }
         }
     }
-     
-     public void deleteCustomer(int id) {
+
+    public void deleteCustomer(int id) {
         String sql = "DELETE FROM [customer]\n"
                 + "where id = ?";
 

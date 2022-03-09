@@ -296,11 +296,12 @@ public class RoomRentalDBContext extends DBContext {
                 + "     VALUES(?,?,?,?,?,?)";
         PreparedStatement stm = null;
         try {
+            stm = connection.prepareStatement(sql);
             stm.setInt(1, rr.getCustomer().getId());
             stm.setInt(2, rr.getRoom().getId());
             stm.setInt(3, rr.getDeposit_money());
             stm.setDate(4, rr.getStart_date());
-            stm.setDate(4, rr.getEnd_date());
+            stm.setDate(5, rr.getEnd_date());
             stm.setBoolean(6, rr.isState());
             ResultSet rs = stm.executeQuery();
             stm.executeUpdate();
