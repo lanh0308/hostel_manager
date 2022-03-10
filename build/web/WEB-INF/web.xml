@@ -117,6 +117,10 @@
         <servlet-name>DeleteRentalController</servlet-name>
         <servlet-class>controller.admin.rental.DeleteRentalController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateStateServiceController</servlet-name>
+        <servlet-class>controller.admin.service.UpdateStateServiceController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -224,6 +228,10 @@
     <servlet-mapping>
         <servlet-name>DeleteRentalController</servlet-name>
         <url-pattern>/admin/rental/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateStateServiceController</servlet-name>
+        <url-pattern>/admin/rental/service/state/update</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

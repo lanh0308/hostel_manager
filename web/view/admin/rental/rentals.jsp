@@ -4,6 +4,7 @@
     Author     : lanh0
 --%>
 
+<%@page import="model.Pagination"%>
 <%@page import="model.RoomRental"%>
 <%@page import="model.Service"%>
 <%@page import="model.ServiceCategory"%>
@@ -20,6 +21,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <%
             ArrayList<RoomRental> roomRentals = (ArrayList<RoomRental>) request.getAttribute("roomRentals");
+            Pagination pagination = (Pagination) request.getAttribute("pagination");
         %>
     </head>
     <jsp:include page="../base/header.jsp" />
@@ -32,8 +34,12 @@
                 <div class="flex flex-col">
                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
-                            <div>
-                                <div class="mb-6 flex justify-end">
+                            <div class="mb-3">
+                                <div class="flex justify-between items-center">
+                                    <form class="flex items-center" method="GET" action="/admin/rental">
+                                        <input type="text" id="search" name="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                        <button type="submit" class="ml-3 inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Search</button>
+                                    </form>
                                     <a href="/admin/rental/add" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Add rental</a>
                                 </div>
                             </div>
@@ -208,8 +214,59 @@
                         </div>
                     </div>
                 </div>
+                <div class="mt-10 w-full flex justify-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="inline-flex -space-x-px">
+                            <li>
+                                <a data="<%=pagination.getPrev()%>" class="page-link py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Previous</a>
+                            </li>
+                            <c:if test="${pagination.getPageIndex()>2}">
+                                <li>
+                                    <a  data="<%=pagination.getPageIndex() - 2%>" class="page-link py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"><%=pagination.getPageIndex() - 2%></a>
+                                </li>
+                            </c:if>
+                            <c:if test="${pagination.getPageIndex()>1}">
+                                <li>
+                                    <a data="<%=pagination.getPageIndex() - 1%>" class="page-link py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"><%=pagination.getPageIndex() - 1%></a>
+                                </li>
+                            </c:if>
+                            <li>
+                                <a  data="<%=pagination.getPageIndex()%>" aria-current="page" class="page-link py-2 px-3 text-blue-600 bg-blue-50 border border-gray-300 hover:bg-blue-100 hover:text-blue-700"><%=pagination.getPageIndex()%></a>
+                            </li>
+                            <c:if test="${pagination.getPageIndex()<pagination.getCount()}">
+                                <li>
+                                    <a data="<%=pagination.getPageIndex() + 1%>" class="page-link py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"><%=pagination.getPageIndex() + 1%></a>
+                                </li>
+                            </c:if>
+                            <c:if test="${pagination.getPageIndex()+1<pagination.getCount()}">
+                                <li>
+                                    <a  data="<%=pagination.getPageIndex() + 2%>" class="page-link py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"><%=pagination.getPageIndex() + 2%></a>
+                                </li>
+                            </c:if>
+                            <li>
+                                <a data="<%=pagination.getNext()%>"  class="page-link py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
     </body>
+    <script>
+        const url_string = window.location.href;
+        const url = new URL(url_string);
+        const paginationLinks = document.querySelectorAll(".page-link");
+        if (paginationLinks) {
+            paginationLinks.forEach(item => {
+                var search = location.search.substring(1);
+                const params = search ? JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"')
+                        .replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
+                const page = item.getAttribute("data");
+                params.page = page;
+                const href = new URLSearchParams(params).toString();
+                item.setAttribute("href", "?" + href);
+            })
+        }
+    </script>
     <jsp:include page="../base/footer.jsp" />
 </html>

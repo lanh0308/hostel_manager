@@ -155,15 +155,21 @@
             <div class="mt-10">
                 <div class="flex flex-col">
                     <c:forEach items="${roomRental.services}" var="service">
-                        <div class="mb-10">
-                            <div class="flex space-x-4">
-                                <p class="text-xl font-medium">Time: ${service.key}</p>
-                                <p class="text-xl font-medium">Price: <span id="price-${service.key}">${roomRental.getToltalPriceByDate(service.key)}</span></p>
-                                <script>
-                                    var price = Number.parseInt($("#price-${service.key}").text());
-                                    price = price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
-                                    $("#price-${service.key}").text(price);
-                                </script>
+                        <div class="mb-10 w-full">
+                            <div class="flex w-full">
+                                <div class="flex space-x-4">
+                                    <p class="text-xl font-medium">Time: ${service.key}</p>
+                                    <p class="text-xl font-medium">Price: <span id="price-${service.key}">${roomRental.getToltalPriceByDate(service.key)}</span></p>
+                                    <script>
+                                        var price = Number.parseInt($("#price-${service.key}").text());
+                                        price = price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+                                        $("#price-${service.key}").text(price);
+                                    </script>
+                                </div>
+                                <div class="ml-auto flex items-center">
+                                    <input  data-name="payment-${service.key}[]" id="payment-${service.key}" onchange="paymentAllChange(this)" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
+                                    <label for="payment-${service.key}" class="ml-2 font-medium text-gray-900">Thanh toán</label>
+                                </div>
                             </div>
                             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
@@ -187,6 +193,9 @@
                                                         new indicator
                                                     </th>
                                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                        payment
+                                                    </th>
+                                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                         action
                                                     </th>
                                                 </tr>
@@ -208,6 +217,16 @@
                                                         </td>
                                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                                             ${item.new_indicator}
+                                                        </td>
+                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                            <c:choose>
+                                                                <c:when test="${item.state}">
+                                                                    <input name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" checked>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <input name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </td>
                                                         <td class="py-4 px-6 text-sm font-medium whitespace-nowrap">
                                                             <a href="/admin/rental/service/edit?id=${item.id}" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
@@ -264,7 +283,6 @@
     <script>
         const url_string = window.location.href;
         const url = new URL(url_string);
-        const search = url.searchParams.get("q");
         const paginationLinks = document.querySelectorAll(".page-link");
         if (paginationLinks) {
             paginationLinks.forEach(item => {
@@ -275,6 +293,64 @@
                 params.page = page;
                 const href = new URLSearchParams(params).toString();
                 item.setAttribute("href", "?" + href);
+            })
+        }
+    </script>
+    <script>
+        
+        <c:forEach items="${roomRental.services}" var="service">
+            var quantity=0;
+            $("input[name='payment-${service.key}[]']").each(function (item) {
+                if($(this).is(":checked")){
+                    quantity++;
+                }
+            })
+            if($("input[name='payment-${service.key}[]']").length==quantity){
+                $("#payment-${service.key}").prop('checked',true);
+            }
+        </c:forEach>
+        const paymentAllChange = (e) => {
+            const name = $(e).attr("data-name");
+            const isChecked = $(e).is(':checked');
+            const data = {
+                payment: [],
+                state: isChecked,
+            };
+            $("input[name='" + name + "']").each(function (item) {
+                $(this).prop('checked', isChecked);
+                data.payment.push($(this).val());
+            })
+            $.ajax({
+                method: "post",
+                url: "/admin/rental/service/state/update",
+                data: data,
+            }).done(function (data) {
+
+            })
+        }
+
+        const paymentChange = (e) => {
+            const data = {
+                payment: [$(e).val()],
+                state: $(e).is(':checked'),
+            };
+            var quantity=0;
+            $("input[name='"+$(e).attr("name")+"']").each(function (item) {
+                if($(this).is(":checked")){
+                    quantity++;
+                }
+            })
+            if($("input[name='"+$(e).attr("name")+"']").length==quantity){
+                $("#payment-"+$(e).attr("data-payment")).prop('checked', true)
+            }else{
+                $("#payment-"+$(e).attr("data-payment")).prop('checked', false)
+            }
+            $.ajax({
+                method: "post",
+                url: "/admin/rental/service/state/update",
+                data: data,
+            }).done(function (data) {
+
             })
         }
     </script>

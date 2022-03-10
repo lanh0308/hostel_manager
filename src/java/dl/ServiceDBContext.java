@@ -431,6 +431,37 @@ public class ServiceDBContext extends DBContext {
             }
         }
     }
+    
+    
+    public void updateServiceState(Service service) {
+        String sql = "UPDATE [service]\n"
+                + "   SET [state] = ?\n"
+                + " WHERE id = ?";
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setBoolean(1, service.isState());
+            stm.setInt(2, service.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
 
     public void deleteService(int id) {
         String sql = "DELETE FROM [service]\n"

@@ -74,6 +74,7 @@ public class AddServiceController extends BaseAuthAdminController {
         service.setService_category(serviceCategory);
         service.setStart_date(start_date);
         service.setEnd_date(end_date);
+        service.setState(false);
         service.setNew_indicator(new_indicator);
         service.setOld_indicator(old_indicator);
 

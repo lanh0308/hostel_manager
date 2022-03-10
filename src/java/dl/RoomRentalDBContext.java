@@ -29,6 +29,101 @@ import model.ServiceCategory;
  */
 public class RoomRentalDBContext extends DBContext {
 
+    public ArrayList<RoomRental> getRoomRentals(String value, int pageIndex, int pageSize) {
+        ArrayList<RoomRental> roomRentals = new ArrayList<>();
+        ServiceDBContext serviceDBContext = new ServiceDBContext();
+        try {
+            String sql = "SELECT * FROM (SELECT [room_rental].[id]\n"
+                    + "		,[room_rental].[customer_id]\n"
+                    + "		,[room_rental].[room_id]\n"
+                    + "		,[room_rental].[deposit_money]\n"
+                    + "		,[room_rental].[start_date]\n"
+                    + "		,[room_rental].[end_date]\n"
+                    + "		,[room_rental].[state]\n"
+                    + "		,[customer].[name]\n"
+                    + "		,[customer].[email]\n"
+                    + "		,[customer].[phone_number]\n"
+                    + "		,[customer].[cmnd]\n"
+                    + "		,[customer].[address]\n"
+                    + "		,[room].[name] as 'roomName'\n"
+                    + "		,[room].[categoryId]\n"
+                    + "		,[room_category].[name] as 'roomCategoryName'\n"
+                    + "		,[room_category].[unit_price]\n"
+                    + "		,[room_category].[areage]\n"
+                    + "		,[room_category].[floor_number]\n"
+                    + "		,[room_category].[is_window]\n"
+                    + "		,[room_category].[is_balcony]\n"
+                    + "		,[room_category].[is_kitchen]\n"
+                    + "		,[room_category].[desk_number]\n"
+                    + "		,[room_category].[id_bed_category]\n"
+                    + "		,[bed_category].[name] as 'bedCategoryName' \n"
+                    + "         ,ROW_NUMBER() OVER (ORDER BY [room_rental].[id] DESC) as row_index\n"
+                    + " FROM [room_rental]\n"
+                    + " INNER JOIN [customer] on [room_rental].[customer_id] = [customer].[id]\n"
+                    + " INNER JOIN [room] on [room_rental].[room_id] = [room].[id]\n"
+                    + " INNER JOIN [room_category] on [room].[categoryId] = [room_category].[id]\n"
+                    + " INNER JOIN [bed_category] on [room_category].[id_bed_category] = [bed_category].[id]\n"
+                    + " WHERE LOWER([room].[name]) LIKE LOWER(?) OR LOWER([customer].[name]) LIKE LOWER(?) OR LOWER([customer].[email]) LIKE LOWER(?) OR LOWER([customer].[phone_number]) LIKE LOWER(?)\n"
+                    + " OR LOWER([customer].[cmnd]) LIKE LOWER(?)) [room_rental]\n"
+                    + " WHERE row_index >= (? - 1) * ? + 1 AND row_index <= ? * ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, "%" + value + "%");
+            stm.setString(2, "%" + value + "%");
+            stm.setString(3, "%" + value + "%");
+            stm.setString(4, "%" + value + "%");
+            stm.setString(5, "%" + value + "%");
+            stm.setInt(6, pageIndex);
+            stm.setInt(7, pageSize);
+            stm.setInt(8, pageIndex);
+            stm.setInt(9, pageSize);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                RoomRental roomRental = new RoomRental();
+                roomRental.setId(rs.getInt("id"));
+                roomRental.setDeposit_money(rs.getInt("deposit_money"));
+                roomRental.setStart_date(rs.getDate("start_date"));
+                roomRental.setEnd_date(rs.getDate("end_date"));
+                roomRental.setState(rs.getBoolean("state"));
+                Customer customer = new Customer();
+                customer.setId(rs.getInt("customer_id"));
+                customer.setName(rs.getString("name"));
+                customer.setPhone_number(rs.getString("phone_number"));
+                customer.setAddress(rs.getString("address"));
+                customer.setEmail(rs.getString("email"));
+                customer.setCmnd(rs.getString("cmnd"));
+                roomRental.setCustomer(customer);
+                TreeMap<Date, ArrayList<Service>> services = serviceDBContext.findByRoomRental(roomRental.getId());
+                roomRental.setServices(services);
+
+                Room room = new Room();
+                room.setId(rs.getInt("room_id"));
+                room.setName(rs.getString("roomName"));
+
+                RoomCategory rc = new RoomCategory();
+                rc.setID(rs.getInt("categoryId"));
+                rc.setName(rs.getString("roomCategoryName"));
+                rc.setUnit_price(rs.getInt("unit_price"));
+                rc.setAreage(rs.getInt("areage"));
+                rc.setFloor_number(rs.getInt("floor_number"));
+                rc.setIs_window(rs.getBoolean("is_window"));
+                rc.setIs_balcony(rs.getBoolean("is_balcony"));
+                rc.setIs_kitchen(rs.getBoolean("is_kitchen"));
+                rc.setDesk_number(rs.getInt("desk_number"));
+                BedCategory bc = new BedCategory();
+                bc.setId(rs.getInt("id_bed_category"));
+                bc.setName(rs.getString("bedCategoryName"));
+                rc.setBed_category(bc);
+                room.setRoomCategory(rc);
+                roomRental.setRoom(room);
+                roomRentals.add(roomRental);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomRentalDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return roomRentals;
+    }
+
     public ArrayList<RoomRental> getRoomRentals() {
         ArrayList<RoomRental> roomRentals = new ArrayList<>();
         ServiceDBContext serviceDBContext = new ServiceDBContext();
@@ -110,7 +205,7 @@ public class RoomRentalDBContext extends DBContext {
         }
         return roomRentals;
     }
-    
+
     public RoomRental getRoomRental(int id) {
         ArrayList<RoomRental> roomRentals = new ArrayList<>();
         ServiceDBContext serviceDBContext = new ServiceDBContext();
@@ -198,7 +293,7 @@ public class RoomRentalDBContext extends DBContext {
         return null;
     }
 
-    public RoomRental getRoomRentalBySearch(int id, String start_date,String end_date ,int pageIndex, int pageSize) {
+    public RoomRental getRoomRentalBySearch(int id, String start_date, String end_date, int pageIndex, int pageSize) {
         ArrayList<RoomRental> roomRentals = new ArrayList<>();
         ServiceDBContext serviceDBContext = new ServiceDBContext();
         try {
@@ -251,7 +346,7 @@ public class RoomRentalDBContext extends DBContext {
                 customer.setEmail(rs.getString("email"));
                 customer.setCmnd(rs.getString("cmnd"));
                 roomRental.setCustomer(customer);
-                TreeMap<Date, ArrayList<Service>> services = serviceDBContext.findByRoomRentalAndSerach(roomRental.getId(), start_date, end_date,pageIndex, pageSize);
+                TreeMap<Date, ArrayList<Service>> services = serviceDBContext.findByRoomRentalAndSerach(roomRental.getId(), start_date, end_date, pageIndex, pageSize);
                 roomRental.setServices(services);
 
                 Room room = new Room();
@@ -371,7 +466,7 @@ public class RoomRentalDBContext extends DBContext {
         serviceDBContext.deleteServiceByRoomRental(id);
         String sql = "DELETE FROM [room_rental]\n"
                 + " WHERE id = ?";
-        
+
         PreparedStatement stm = null;
         try {
             stm = connection.prepareStatement(sql);
@@ -395,5 +490,57 @@ public class RoomRentalDBContext extends DBContext {
                 }
             }
         }
+    }
+    
+    public int getSize(String value) {
+        ArrayList<RoomRental> roomRentals = new ArrayList<>();
+        ServiceDBContext serviceDBContext = new ServiceDBContext();
+        try {
+            String sql = "SELECT COUNT(*) as 'size' FROM (SELECT [room_rental].[id]\n"
+                    + "		,[room_rental].[customer_id]\n"
+                    + "		,[room_rental].[room_id]\n"
+                    + "		,[room_rental].[deposit_money]\n"
+                    + "		,[room_rental].[start_date]\n"
+                    + "		,[room_rental].[end_date]\n"
+                    + "		,[room_rental].[state]\n"
+                    + "		,[customer].[name]\n"
+                    + "		,[customer].[email]\n"
+                    + "		,[customer].[phone_number]\n"
+                    + "		,[customer].[cmnd]\n"
+                    + "		,[customer].[address]\n"
+                    + "		,[room].[name] as 'roomName'\n"
+                    + "		,[room].[categoryId]\n"
+                    + "		,[room_category].[name] as 'roomCategoryName'\n"
+                    + "		,[room_category].[unit_price]\n"
+                    + "		,[room_category].[areage]\n"
+                    + "		,[room_category].[floor_number]\n"
+                    + "		,[room_category].[is_window]\n"
+                    + "		,[room_category].[is_balcony]\n"
+                    + "		,[room_category].[is_kitchen]\n"
+                    + "		,[room_category].[desk_number]\n"
+                    + "		,[room_category].[id_bed_category]\n"
+                    + "		,[bed_category].[name] as 'bedCategoryName' \n"
+                    + " FROM [room_rental]\n"
+                    + " INNER JOIN [customer] on [room_rental].[customer_id] = [customer].[id]\n"
+                    + " INNER JOIN [room] on [room_rental].[room_id] = [room].[id]\n"
+                    + " INNER JOIN [room_category] on [room].[categoryId] = [room_category].[id]\n"
+                    + " INNER JOIN [bed_category] on [room_category].[id_bed_category] = [bed_category].[id]\n"
+                    + " WHERE LOWER([customer].[name]) LIKE LOWER(?) OR LOWER([customer].[email]) LIKE LOWER(?) OR LOWER([customer].[phone_number]) LIKE LOWER(?)\n"
+                    + " OR LOWER([customer].[cmnd]) LIKE LOWER(?)) [room_rental]";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, "%" + value + "%");
+            stm.setString(2, "%" + value + "%");
+            stm.setString(3, "%" + value + "%");
+            stm.setString(4, "%" + value + "%");
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                int size = rs.getInt("size");
+                return size;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomRentalDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }
