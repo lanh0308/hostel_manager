@@ -20,7 +20,7 @@ public class Service {
     private Date end_date;
     private int new_indicator;
     private int old_indicator;
-    private boolean State;
+    private boolean state;
 
     public int getId() {
         return id;
@@ -79,11 +79,11 @@ public class Service {
     }
 
     public boolean isState() {
-        return State;
+        return state;
     }
 
     public void setState(boolean State) {
-        this.State = State;
+        this.state = State;
     }
     
     

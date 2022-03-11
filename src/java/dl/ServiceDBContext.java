@@ -101,35 +101,40 @@ public class ServiceDBContext extends DBContext {
     public TreeMap<Date, ArrayList<Service>> findByRoomRental(int roomRentalId) {
         TreeMap<Date, ArrayList<Service>> services = new TreeMap<>(Collections.reverseOrder());
         try {
-            String sql = "SELECT [service].[id]\n"
-                    + "      ,[service].[room_rental_id]\n"
-                    + "      ,[service].[service_id]\n"
-                    + "      ,[service].[start_date]\n"
-                    + "      ,[service].[end_date]\n"
-                    + "      ,[service].[new_indicator]\n"
-                    + "      ,[service].[old_indicator]\n"
-                    + "      ,[service].[state]\n"
-                    + "	  ,[room_rental].[customer_id]\n"
-                    + "	  ,[room_rental].[room_id]\n"
-                    + "	  ,[room_rental].[deposit_money]\n"
-                    + "	  ,[room_rental].[start_date] as 'room_rental_start_date'\n"
-                    + "	  ,[room_rental].[end_date] as 'room_rental_end_date'\n"
-                    + "	  ,[room_rental].[state] as 'room_reantal_state'\n"
-                    + "	  ,[customer].[name]\n"
-                    + "	  ,[customer].[email]\n"
-                    + "	  ,[customer].[phone_number]\n"
-                    + "	  ,[customer].[cmnd]\n"
-                    + "	  ,[customer].[address]\n"
-                    + "	  ,[service_category].[name] as 'serviceCategoryName'\n"
-                    + "	  ,[service_category].[unit_price] \n"
-                    + "  FROM [service] \n"
-                    + " INNER JOIN [service_category] on [service_category].[id] =  [service].[service_id]\n"
+            String sql = "SELECT * FROM (SELECT * FROM (SELECT [service].[id]\n"
+                    + ",[service].[room_rental_id]\n"
+                    + ",[service].[service_id]\n"
+                    + ",[service].[start_date]\n"
+                    + ",[service].[end_date]\n"
+                    + ",[service].[new_indicator]\n"
+                    + ",[service].[old_indicator]\n"
+                    + ",[service].[state]\n"
+                    + " ,[room_rental].[customer_id]\n"
+                    + "  ,[room_rental].[room_id]\n"
+                    + ",[room_rental].[deposit_money]\n"
+                    + " ,[room_rental].[start_date] as 'room_rental_start_date'\n"
+                    + " ,[room_rental].[end_date] as 'room_rental_end_date'\n"
+                    + ",[room_rental].[state] as 'room_reantal_state'\n"
+                    + " ,[customer].[name]\n"
+                    + ",[customer].[email]\n"
+                    + ",[customer].[phone_number]\n"
+                    + ",[customer].[cmnd]\n"
+                    + " ,[customer].[address]\n"
+                    + ",[service_category].[name] as 'serviceCategoryName'\n"
+                    + ",[service_category].[unit_price] \n"
+                    + " FROM [service] \n"
+                    + "INNER JOIN [service_category] on [service_category].[id] =  [service].[service_id]\n"
                     + " INNER JOIN [room_rental] on  [room_rental].[id] = [service].[room_rental_id]\n"
-                    + " INNER JOIN [customer] on  [customer].[id] = [room_rental].[customer_id]\n"
-                    + " WHERE [service].[room_rental_id] = ?\n"
-                    + " ORDER BY [service].[start_date] DESC";
+                    + "INNER JOIN [customer] on  [customer].[id] = [room_rental].[customer_id]) [service]\n"
+                    + "INNER JOIN (SELECT [service].[start_date] as 'group_start_date'\n"
+                    + ",ROW_NUMBER() OVER (ORDER BY [service].[start_date] DESC) as row_index\n"
+                    + "FROM [service] WHERE [service].[room_rental_id] = ?\n"
+                    + "GROUP BY [service].[start_date]) [date] ON [date].[group_start_date]=[service].[start_date]\n"
+                    + "WHERE [service].[room_rental_id] = ?)  [service]\n"
+                    + "ORDER BY  [service].[row_index] ASC\n";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, roomRentalId);
+            stm.setInt(2, roomRentalId);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Service service = new Service();
@@ -185,7 +190,7 @@ public class ServiceDBContext extends DBContext {
         return services;
     }
 
-    public TreeMap<Date, ArrayList<Service>> findByRoomRentalAndSerach(int roomRentalId,String start_date, String end_date, int pageIndex, int pageSize) {
+    public TreeMap<Date, ArrayList<Service>> findByRoomRentalAndSerach(int roomRentalId, String start_date, String end_date, int pageIndex, int pageSize) {
         TreeMap<Date, ArrayList<Service>> services = new TreeMap<>(Collections.reverseOrder());
         try {
             String sql = "SELECT * FROM (SELECT * FROM (SELECT [service].[id]\n"
@@ -196,38 +201,71 @@ public class ServiceDBContext extends DBContext {
                     + ",[service].[new_indicator]\n"
                     + ",[service].[old_indicator]\n"
                     + ",[service].[state]\n"
-                    + " ,[room_rental].[customer_id]\n"
-                    + "  ,[room_rental].[room_id]\n"
+                    + ",[room_rental].[customer_id]\n"
+                    + ",[room_rental].[room_id]\n"
                     + ",[room_rental].[deposit_money]\n"
-                    + " ,[room_rental].[start_date] as 'room_rental_start_date'\n"
-                    + " ,[room_rental].[end_date] as 'room_rental_end_date'\n"
+                    + ",[room_rental].[start_date] as 'room_rental_start_date'\n"
+                    + ",[room_rental].[end_date] as 'room_rental_end_date'\n"
                     + ",[room_rental].[state] as 'room_reantal_state'\n"
-                    + " ,[customer].[name]\n"
+                    + ",[customer].[name]\n"
                     + ",[customer].[email]\n"
                     + ",[customer].[phone_number]\n"
                     + ",[customer].[cmnd]\n"
-                    + " ,[customer].[address]\n"
+                    + ",[customer].[address]\n"
                     + ",[service_category].[name] as 'serviceCategoryName'\n"
                     + ",[service_category].[unit_price] \n"
-                    + " FROM [service] \n"
-                    + "INNER JOIN [service_category] on [service_category].[id] =  [service].[service_id]\n"
-                    + " INNER JOIN [room_rental] on  [room_rental].[id] = [service].[room_rental_id]\n"
-                    + "INNER JOIN [customer] on  [customer].[id] = [room_rental].[customer_id]) [service]\n"
+                    + "FROM [service] \n"
+                    + "INNER JOIN [service_category] on [service_category].[id] = [service].[service_id]\n"
+                    + "INNER JOIN [room_rental] on  [room_rental].[id] = [service].[room_rental_id]\n"
+                    + "INNER JOIN [customer] on [customer].[id] = [room_rental].[customer_id]) [service]\n"
                     + "INNER JOIN (SELECT [service].[start_date] as 'group_start_date'\n"
                     + ",ROW_NUMBER() OVER (ORDER BY [service].[start_date] DESC) as row_index\n"
-                    + "FROM [service] WHERE [service].[start_date] <= ? AND [service].[end_date] >= ?\n"
-                    + "GROUP BY [service].[start_date]) [date] ON [date].[group_start_date]=[service].[start_date]\n"
+                    + "FROM [service] WHERE [service].[room_rental_id] = ?\n ";
+            if (start_date != null && !start_date.trim().isEmpty()) {
+                sql += " AND [service].[start_date] <= ? \n";
+                if (end_date != null && !end_date.trim().isEmpty()) {
+                    sql += " OR [service].[end_date] >= ?\n ";
+                }
+            } else if (end_date != null && !end_date.trim().isEmpty()) {
+                sql += " AND [service].[end_date] >= ?\n ";
+            }
+            sql += "GROUP BY [service].[start_date]) [date] ON [date].[group_start_date]=[service].[start_date]\n"
                     + "WHERE [service].[room_rental_id] = ?)  [service]\n"
                     + "WHERE row_index >= (? - 1) * ? + 1 AND row_index <= ? * ?\n"
-                    + "ORDER BY  [service].[row_index] ASC\n";
+                    + "ORDER BY  [service].[row_index] ASC";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, start_date );
-            stm.setString(2, end_date );
-            stm.setInt(3, roomRentalId);
-            stm.setInt(4, pageIndex);
-            stm.setInt(5, pageSize);
-            stm.setInt(6, pageIndex);
-            stm.setInt(7, pageSize);
+            stm.setInt(1, roomRentalId);
+            if (start_date != null && !start_date.trim().isEmpty()) {
+                stm.setString(2, start_date);
+                if (end_date != null && !end_date.trim().isEmpty()) {
+                    stm.setString(3, end_date);
+                    stm.setInt(4, roomRentalId);
+                    stm.setInt(5, pageIndex);
+                    stm.setInt(6, pageSize);
+                    stm.setInt(7, pageIndex);
+                    stm.setInt(8, pageSize);
+                } else {
+                    stm.setString(2, start_date);
+                    stm.setInt(3, roomRentalId);
+                    stm.setInt(4, pageIndex);
+                    stm.setInt(5, pageSize);
+                    stm.setInt(6, pageIndex);
+                    stm.setInt(7, pageSize);
+                }
+            } else if (end_date != null && !end_date.trim().isEmpty()) {
+                stm.setString(2, end_date);
+                stm.setInt(3, roomRentalId);
+                stm.setInt(4, pageIndex);
+                stm.setInt(5, pageSize);
+                stm.setInt(6, pageIndex);
+                stm.setInt(7, pageSize);
+            } else {
+                stm.setInt(2, roomRentalId);
+                stm.setInt(3, pageIndex);
+                stm.setInt(4, pageSize);
+                stm.setInt(5, pageIndex);
+                stm.setInt(6, pageSize);
+            }
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Service service = new Service();
@@ -431,8 +469,7 @@ public class ServiceDBContext extends DBContext {
             }
         }
     }
-    
-    
+
     public void updateServiceState(Service service) {
         String sql = "UPDATE [service]\n"
                 + "   SET [state] = ?\n"
@@ -488,7 +525,7 @@ public class ServiceDBContext extends DBContext {
             Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void deleteByServiceCategory(int id) {
         String sql = "DELETE FROM [service]\n"
                 + " WHERE service_id = ?";
@@ -531,14 +568,35 @@ public class ServiceDBContext extends DBContext {
                     + "INNER JOIN [customer] on  [customer].[id] = [room_rental].[customer_id]) [service]\n"
                     + "INNER JOIN (SELECT [service].[start_date] as 'group_start_date'\n"
                     + ",ROW_NUMBER() OVER (ORDER BY [service].[start_date] DESC) as row_index\n"
-                    + "FROM [service] WHERE [service].[start_date] <= ? AND [service].[end_date] >= ?\n"
-                    + "GROUP BY [service].[start_date]) [date] ON [date].[group_start_date]=[service].[start_date]\n"
+                    + "FROM [service] WHERE [service].[room_rental_id] = ? \n";
+            if (start_date != null && !start_date.trim().isEmpty()) {
+                sql += " AND [service].[start_date] <= ? \n";
+                if (end_date != null && !end_date.trim().isEmpty()) {
+                    sql += " OR [service].[end_date] >= ?\n ";
+                }
+            } else if (end_date != null && !end_date.trim().isEmpty()) {
+                sql += " AND [service].[end_date] >= ?\n ";
+            }
+            sql += "GROUP BY [service].[start_date]) [date] ON [date].[group_start_date]=[service].[start_date]\n"
                     + "WHERE [service].[room_rental_id] = ?)  [service]\n"
                     + "GROUP BY [service].[row_index]) [service]\n";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, start_date);
-            stm.setString(2, end_date);
-            stm.setInt(3, roomRentalId);
+            stm.setInt(1, roomRentalId);
+            if (start_date != null && !start_date.trim().isEmpty()) {
+                stm.setString(2, start_date);
+                if (end_date != null && !end_date.trim().isEmpty()) {
+                    stm.setString(3, end_date);
+                    stm.setInt(4, roomRentalId);
+                } else {
+                    stm.setString(2, start_date);
+                    stm.setInt(3, roomRentalId);
+                }
+            } else if (end_date != null && !end_date.trim().isEmpty()) {
+                stm.setString(2, end_date);
+                stm.setInt(3, roomRentalId);
+            } else {
+                stm.setInt(2, roomRentalId);
+            }
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 int size = rs.getInt("size");
