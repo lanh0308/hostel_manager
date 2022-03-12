@@ -27,7 +27,8 @@ public class RoomCategoryDBContext extends DBContext {
             String sql = "select r.id as 'rid', r.name as 'rName', \n"
                     + " r.unit_price, r.areage, r.floor_number, r.is_window, \n"
                     + " r.is_balcony, r.is_kitchen, r.desk_number, b.id as 'bid', b.name as 'bName'\n"
-                    + "from room_category r inner join bed_category b on r.id_bed_category = b.id";
+                    + "from room_category r inner join bed_category b on r.id_bed_category = b.id"
+                    + " order by r.unit_price asc";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {

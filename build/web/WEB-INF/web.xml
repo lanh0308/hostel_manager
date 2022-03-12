@@ -121,6 +121,14 @@
         <servlet-name>UpdateStateServiceController</servlet-name>
         <servlet-class>controller.admin.service.UpdateStateServiceController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HomeController</servlet-name>
+        <servlet-class>controller.home.HomeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RoomClientController</servlet-name>
+        <servlet-class>controller.room.RoomClientController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -232,6 +240,14 @@
     <servlet-mapping>
         <servlet-name>UpdateStateServiceController</servlet-name>
         <url-pattern>/admin/rental/service/state/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeController</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoomClientController</servlet-name>
+        <url-pattern>/room</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -3,44 +3,42 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.auth;
+package controller.room;
 
-import dl.AccountDBContext;
+import dl.RoomDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Account;
+import model.Room;
 
 /**
  *
  * @author lanh0
  */
-public class LoginController extends HttpServlet {
+public class RoomClientController extends HttpServlet {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        RoomDBContext roomDB = new RoomDBContext();
+        ArrayList<Room> rooms = roomDB.getAllRooms();
+        request.setAttribute("rooms", rooms);
+        request.getRequestDispatcher("/view/room/room.jsp").forward(request, response);
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        request.getRequestDispatcher("view/auth/login.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
-   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        AccountDBContext dbAccount = new AccountDBContext();
-        Account account = dbAccount.getAccount(username, password);
-        if(account == null){
-            response.getWriter().println("login fail!");
-        } else {
-            request.getSession().setAttribute("account", account);
-            response.getWriter().println("login successful!");
-        }
+        processRequest(request, response);
     }
 
     /**
