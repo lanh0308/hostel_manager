@@ -13,12 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
+import utils.HashPass;
 
 /**
  *
  * @author lanh0
  */
 public class LoginController extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,19 +29,31 @@ public class LoginController extends HttpServlet {
 
     }
 
-   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        AccountDBContext dbAccount = new AccountDBContext();
-        Account account = dbAccount.getAccount(username, password);
-        if(account == null){
-            response.getWriter().println("login fail!");
-        } else {
-            request.getSession().setAttribute("account", account);
-            response.getWriter().println("login successful!");
+        try {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+
+            if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+                throw new Exception("Username and password is required!");
+            }
+
+            HashPass hashpass = new HashPass();
+            String password_hash = hashpass.hashPassword(password);
+
+            AccountDBContext accountDB = new AccountDBContext();
+            Account account = accountDB.getAccount(username, password);
+            if (account == null) {
+                throw new Exception("Username and password is wrong!");
+            } else {
+                request.getSession().setAttribute("phong", account);
+                response.sendRedirect("/history");
+            }
+        } catch (Exception e) {
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/view/admin/auth/login.jsp").forward(request, response);
         }
     }
 

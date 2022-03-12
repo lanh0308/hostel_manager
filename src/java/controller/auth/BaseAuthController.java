@@ -19,7 +19,7 @@ import model.Account;
 public abstract class BaseAuthController extends HttpServlet {
 
     private boolean isAuth(HttpServletRequest request) {
-        Account account = (Account) request.getSession().getAttribute("account");
+        Account account = (Account) request.getSession().getAttribute("phong");
         return account != null;
     }
 

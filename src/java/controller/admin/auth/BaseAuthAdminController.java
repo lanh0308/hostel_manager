@@ -23,7 +23,7 @@ public abstract class BaseAuthAdminController extends HttpServlet {
     protected abstract boolean isPermission(HttpServletRequest request);
 
     private boolean isAuth(HttpServletRequest request) {
-//        Account account = (Account) request.getSession().getAttribute("account");
+//        Account account = (Account) request.getSession().getAttribute("admin");
 //        if (account == null) {
 //            return false;
 //        } else {

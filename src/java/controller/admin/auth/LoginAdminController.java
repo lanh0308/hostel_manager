@@ -44,9 +44,9 @@ public class LoginAdminController extends HttpServlet {
             AccountDBContext accountDB = new AccountDBContext();
             Account account = accountDB.getAccount(username, password);
             if(account==null){
-                throw new Exception("Username and password is wrong!");
+                throw new Exception("Ma phong and password is wrong!");
             } else{
-                request.getSession().setAttribute("account", account);
+                request.getSession().setAttribute("phong", account);
                 response.sendRedirect("/dashboard");
             }
         } catch (Exception e) {

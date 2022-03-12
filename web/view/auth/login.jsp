@@ -18,7 +18,7 @@
     </head>
     <body>
         <div class="min-h-screen flex justify-center items-center">
-            <form  action="/admin/login" method="post" class="px-10 py-12 mx-auto rounded-md" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; min-width: 500px">
+            <form  action="/login" method="post" class="px-10 py-12 mx-auto rounded-md" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; min-width: 500px">
                 <h3 class="text-4xl mb-6">Room</h3>
                 <c:if test="${error!=null}">
                     <div id="showErrorForm">
