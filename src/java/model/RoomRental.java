@@ -107,4 +107,70 @@ public class RoomRental {
         return toltalPrice.add(new BigDecimal(this.room.getRoomCategory().getUnit_price()));
     }
     
+    
+    public BigDecimal getToltalPriceByDateDebit(Date date){
+        BigDecimal toltalPrice = new BigDecimal(0);
+        boolean isPay = true;
+        for (Map.Entry<Date, ArrayList<Service>> entry : services.entrySet()) {
+            Date key = entry.getKey();
+            ArrayList<Service> value = entry.getValue();
+            if(key.equals(date)){
+                if(value==null || value.isEmpty() || value.size()<=0){
+                    isPay=false;
+                }
+                for (Service service : value) {
+                    if (!service.isState()) {
+                         toltalPrice = toltalPrice.add(service.getPrice());
+                         isPay = false;
+                    }
+                }
+                break;
+            }
+        }
+        if(!isPay){
+            toltalPrice = toltalPrice.add(new BigDecimal(this.room.getRoomCategory().getUnit_price()));
+        }
+        return toltalPrice;
+    }
+    
+    public BigDecimal getToltalPriceByMonth(int month){
+        BigDecimal toltalPrice = new BigDecimal(0);
+        for (Map.Entry<Date, ArrayList<Service>> entry : services.entrySet()) {
+            Date key = entry.getKey();
+            ArrayList<Service> value = entry.getValue();
+            if(key.getMonth()==month){
+                for (Service service : value) {
+                    toltalPrice = toltalPrice.add(service.getPrice());
+                }
+                break;
+            }
+        }
+        return toltalPrice.add(new BigDecimal(this.room.getRoomCategory().getUnit_price()));
+    }
+    
+    public BigDecimal getToltalPriceByMonthDebit(int month){
+        BigDecimal toltalPrice = new BigDecimal(0);
+        boolean isPay = true;
+        for (Map.Entry<Date, ArrayList<Service>> entry : services.entrySet()) {
+            Date key = entry.getKey();
+            ArrayList<Service> value = entry.getValue();
+            if(key.getMonth() == month){
+                if(value==null || value.isEmpty() || value.size()<=0){
+                    isPay=false;
+                }
+                for (Service service : value) {
+                    if (!service.isState()) {
+                         toltalPrice = toltalPrice.add(service.getPrice());
+                         isPay = false;
+                    }
+                }
+                break;
+            }
+        }
+        if(!isPay){
+            toltalPrice = toltalPrice.add(new BigDecimal(this.room.getRoomCategory().getUnit_price()));
+        }
+        return toltalPrice;
+    }
+    
 }
