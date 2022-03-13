@@ -51,7 +51,8 @@
                             <button type="submit" class="ml-2 inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Search</button>
                         </form>
                     </div>
-                    <div class="flex justify-end">
+                    <div class="flex justify-end space-x-4">
+                        <a href="/report" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Report</a>
                         <a href="/logout" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">logout</a>
                     </div>
                 </div>

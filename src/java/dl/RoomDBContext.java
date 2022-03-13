@@ -206,6 +206,46 @@ public class RoomDBContext extends DBContext {
         }
         return null;
     }
+    
+    
+    public Room getRoomByName(String name) {
+        RoomCategoryDBContext roomCategoryDB = new RoomCategoryDBContext();
+        try {
+            String sql = "SELECT r.id as rid, r.name as rname, "
+                    + "rc.id as rcid, rc.name as rcname,rc.unit_price, rc.areage, rc.floor_number, rc.is_window, rc.is_balcony, rc.is_kitchen, rc.desk_number, "
+                    + "bc.id as bcid, bc.name as bcname \n"
+                    + "FROM [room] AS r INNER JOIN [room_category] AS rc ON r.categoryId = rc.id\n"
+                    + "INNER JOIN [bed_category] AS bc ON rc.id_bed_category = bc.id \n"
+                    + "where r.name = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, name);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Room room = new Room();
+                room.setId(rs.getInt("rid"));
+                room.setName(rs.getString("rname"));
+                RoomCategory rc = new RoomCategory();
+                rc.setID(rs.getInt("rcid"));
+                rc.setName(rs.getString("rcname"));
+                rc.setUnit_price(rs.getInt("unit_price"));
+                rc.setAreage(rs.getInt("areage"));
+                rc.setFloor_number(rs.getInt("floor_number"));
+                rc.setIs_window(rs.getBoolean("is_window"));
+                rc.setIs_balcony(rs.getBoolean("is_balcony"));
+                rc.setIs_kitchen(rs.getBoolean("is_kitchen"));
+                rc.setDesk_number(rs.getInt("desk_number"));
+                BedCategory bc = new BedCategory();
+                bc.setId(rs.getInt("bcid"));
+                bc.setName(rs.getString("bcname"));
+                rc.setBed_category(bc);
+                room.setRoomCategory(rc);
+                return room;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public void insertRoom(Room room) {
         String sql = "INSERT INTO [room]([name],[categoryId])\n"

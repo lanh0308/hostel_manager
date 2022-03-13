@@ -51,7 +51,7 @@ public class LoginController extends HttpServlet {
                 if (!account.getUsername().toLowerCase().contains("map")) {
                     throw new Exception("Username cant not access!");
                 } else {
-                    request.getSession().setAttribute("phong", account);
+                    request.getSession().setAttribute("room", account);
                     response.sendRedirect("/history");
                 }
             }

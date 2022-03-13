@@ -21,8 +21,8 @@ public class LogoutController extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         request.getSession().removeAttribute("phong");
-         response.sendRedirect("/");
+         request.getSession().removeAttribute("room");
+         response.sendRedirect("/login");
     }
 
     

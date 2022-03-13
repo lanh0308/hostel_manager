@@ -3,38 +3,42 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.room;
+package controller.admin.report;
 
-import controller.auth.BaseAuthController;
-import dl.RoomRentalDBContext;
-import dl.ServiceDBContext;
+import controller.admin.auth.BaseAuthAdminController;
+import dl.ReportDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Account;
 import model.Pagination;
-import model.RoomRental;
+import model.Report;
 
 /**
  *
  * @author lanh0
  */
-public class HistoryRoomController extends BaseAuthController {
+public class ReportAdminController extends BaseAuthAdminController {
+
+    @Override
+    protected boolean isPermission(HttpServletRequest request) {
+        return true;
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account account = (Account) request.getSession().getAttribute("room");
-        String phong = account.getUsername().toLowerCase().replaceAll("[^0-9]", "").trim();
-        RoomRentalDBContext roomRentalDB = new RoomRentalDBContext();
-        int pageSize = 3;
+        int pageSize = 12;
         String page = request.getParameter("page");
-        String start_date = request.getParameter("start_date");
-        String end_date = request.getParameter("end_date");
+        String search = request.getParameter("search");
+        String status = request.getParameter("status");
+        if (search == null) {
+            search = "";
+        } else {
+            search = new String(search.getBytes("iso-8859-1"), "utf-8");
+        }
         if (page == null || page.trim().length() == 0) {
             page = "1";
         }
@@ -47,16 +51,12 @@ public class HistoryRoomController extends BaseAuthController {
         } catch (Exception e) {
             pageIndex = 1;
         }
-        RoomRental roomRental = roomRentalDB.getRoomRentalByPhong(phong, start_date, end_date, pageIndex, pageSize);
-        ServiceDBContext serviceDB = new ServiceDBContext();
-        ArrayList<Date> start_dates = serviceDB.getAllStartDate(roomRental.getId());
-        ArrayList<Date> end_dates = serviceDB.getAllEndDate(roomRental.getId());
-        Pagination pagination = new Pagination(pageIndex, pageSize, serviceDB.getSize(roomRental.getId(), start_date, end_date));
-        request.setAttribute("roomRental", roomRental);
+        ReportDBContext reportDB = new ReportDBContext();
+        ArrayList<Report> reports = reportDB.getReports(search, status, pageIndex, pageSize);
+        Pagination pagination = new Pagination(pageIndex, pageSize, reportDB.getSize(search, status));
+        request.setAttribute("reports", reports);
         request.setAttribute("pagination", pagination);
-        request.setAttribute("start_dates", start_dates);
-        request.setAttribute("end_dates", end_dates);
-        request.getRequestDispatcher("/view/room/history.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/admin/report/list.jsp").forward(request, response);
     }
 
     @Override
@@ -71,6 +71,11 @@ public class HistoryRoomController extends BaseAuthController {
         processRequest(request, response);
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";
