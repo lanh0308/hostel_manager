@@ -48,12 +48,16 @@ public class LoginController extends HttpServlet {
             if (account == null) {
                 throw new Exception("Username and password is wrong!");
             } else {
-                request.getSession().setAttribute("phong", account);
-                response.sendRedirect("/history");
+                if (!account.getUsername().toLowerCase().contains("map")) {
+                    throw new Exception("Username cant not access!");
+                } else {
+                    request.getSession().setAttribute("phong", account);
+                    response.sendRedirect("/history");
+                }
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
-            request.getRequestDispatcher("/view/admin/auth/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/view/auth/login.jsp").forward(request, response);
         }
     }
 

@@ -133,6 +133,22 @@
         <servlet-name>HistoryRoomController</servlet-name>
         <servlet-class>controller.room.HistoryRoomController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>controller.auth.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditCustomerController</servlet-name>
+        <servlet-class>controller.admin.customer.EditCustomerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RentalSendEmail</servlet-name>
+        <servlet-class>controller.admin.rental.RentalSendEmail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutAdminController</servlet-name>
+        <servlet-class>controller.admin.auth.LogoutAdminController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -256,6 +272,22 @@
     <servlet-mapping>
         <servlet-name>HistoryRoomController</servlet-name>
         <url-pattern>/history</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditCustomerController</servlet-name>
+        <url-pattern>/admin/rental/customer/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RentalSendEmail</servlet-name>
+        <url-pattern>/admin/rental/sendemail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutAdminController</servlet-name>
+        <url-pattern>/admin/logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

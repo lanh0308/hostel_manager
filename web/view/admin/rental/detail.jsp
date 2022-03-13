@@ -143,7 +143,7 @@
                                             ${roomRental.customer.cmnd}
                                         </td>
                                         <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
-                                            <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                            <a href="/admin/rental/customer/edit?id=${roomRental.customer.id}" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                         </td>
                                     </tr>
                                 </tbody>
