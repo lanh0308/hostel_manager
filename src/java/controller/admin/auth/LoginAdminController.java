@@ -46,7 +46,7 @@ public class LoginAdminController extends HttpServlet {
             if(account==null){
                 throw new Exception("Ma phong and password is wrong!");
             } else{
-                request.getSession().setAttribute("phong", account);
+                request.getSession().setAttribute("admin", account);
                 response.sendRedirect("/dashboard");
             }
         } catch (Exception e) {

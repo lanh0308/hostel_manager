@@ -4,10 +4,19 @@
         <filter-name>AuthAdminFilter</filter-name>
         <filter-class>filter.AuthAdminFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>FilterAuth</filter-name>
+        <filter-class>filter.FilterAuth</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterAuth</filter-name>
+        <url-pattern>/report/*</url-pattern>
+         <url-pattern>/history/*</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>AuthAdminFilter</filter-name>
-        <url-pattern>/admin/*</url-pattern>
         <url-pattern>/dashboard/*</url-pattern>
+        <url-pattern>/admin/*</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>LoginController</servlet-name>

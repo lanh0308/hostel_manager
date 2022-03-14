@@ -7,6 +7,7 @@ package controller.admin.service;
 
 import com.google.gson.Gson;
 import controller.admin.auth.BaseAuthAdminController;
+import dl.AccountDBContext;
 import dl.ServiceCategoryDBContext;
 import dl.ServiceDBContext;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Account;
 import model.Service;
 import model.ServiceCategory;
 
@@ -28,7 +30,10 @@ public class EditServiceController extends BaseAuthAdminController {
 
     @Override
     protected boolean isPermission(HttpServletRequest request) {
-        return true;
+        AccountDBContext accountDB = new AccountDBContext();
+        Account account = (Account) request.getSession().getAttribute("admin");
+        boolean isPer = accountDB.getPermision(account, "SERVICE", "UPDATE");
+        return isPer;
     }
 
     @Override

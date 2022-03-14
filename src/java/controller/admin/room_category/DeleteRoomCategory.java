@@ -6,6 +6,7 @@
 package controller.admin.room_category;
 
 import controller.admin.auth.BaseAuthAdminController;
+import dl.AccountDBContext;
 import dl.RoomCategoryDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Account;
 
 /**
  *
@@ -22,7 +24,10 @@ public class DeleteRoomCategory extends BaseAuthAdminController {
 
     @Override
     protected boolean isPermission(HttpServletRequest request) {
-        return true;
+        AccountDBContext accountDB = new AccountDBContext();
+        Account account = (Account) request.getSession().getAttribute("admin");
+        boolean isPer = accountDB.getPermision(account, "CATEGORY", "REMOVE");
+        return isPer;
     }
 
    

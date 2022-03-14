@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author lanh0
  */
-public class AuthAdminFilter implements Filter {
+public class FilterAuth implements Filter {
     
     private static final boolean debug = true;
 
@@ -32,7 +32,7 @@ public class AuthAdminFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
     
-    public AuthAdminFilter() {
+    public FilterAuth() {
     }    
     
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -40,15 +40,15 @@ public class AuthAdminFilter implements Filter {
             throws IOException, ServletException {
         
         if (debug) {
-            log("AdminFilter:doFilter()");
+            log("FilterAuth:doFilter()");
         }
         
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
-        String loginURI = req.getContextPath() + "/admin/login";
+        String loginURI = req.getContextPath() + "/login";
 
-        boolean loggedInAdmin = session != null && session.getAttribute("admin") != null;
+        boolean loggedInAdmin = session != null && session.getAttribute("room") != null;
         boolean loginRequest = req.getRequestURI().equals(loginURI);    
 
         if (loggedInAdmin || loginRequest) {
@@ -56,8 +56,8 @@ public class AuthAdminFilter implements Filter {
         } else {
             res.sendRedirect(loginURI);
         }
-        
     }
+
     /**
      * Return the filter configuration object for this filter.
      */
@@ -87,7 +87,7 @@ public class AuthAdminFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {                
-                log("AuthAdminFilter:Initializing filter");
+                log("FilterAuth:Initializing filter");
             }
         }
     }
@@ -98,9 +98,9 @@ public class AuthAdminFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("AuthAdminFilter()");
+            return ("FilterAuth()");
         }
-        StringBuffer sb = new StringBuffer("AuthAdminFilter(");
+        StringBuffer sb = new StringBuffer("FilterAuth(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

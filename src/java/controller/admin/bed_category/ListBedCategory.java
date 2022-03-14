@@ -6,6 +6,7 @@
 package controller.admin.bed_category;
 
 import controller.admin.auth.BaseAuthAdminController;
+import dl.AccountDBContext;
 import dl.BedCategoryDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Account;
 import model.BedCategory;
 
 /**
@@ -21,10 +23,13 @@ import model.BedCategory;
  * @author lanh0
  */
 public class ListBedCategory extends BaseAuthAdminController {
-    
+
     @Override
     protected boolean isPermission(HttpServletRequest request) {
-        return true;
+        AccountDBContext accountDB = new AccountDBContext();
+        Account account = (Account) request.getSession().getAttribute("admin");
+        boolean isPer = accountDB.getPermision(account, "BED_CATEGORY", "READ");
+        return isPer;
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -34,7 +39,6 @@ public class ListBedCategory extends BaseAuthAdminController {
         request.setAttribute("bedCategorys", bedCategorys);
         request.getRequestDispatcher("/view/admin/bedcategory/list.jsp").forward(request, response);
     }
-
 
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
@@ -52,7 +56,5 @@ public class ListBedCategory extends BaseAuthAdminController {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-   
 
 }

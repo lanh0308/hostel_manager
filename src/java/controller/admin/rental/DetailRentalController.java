@@ -6,6 +6,7 @@
 package controller.admin.rental;
 
 import controller.admin.auth.BaseAuthAdminController;
+import dl.AccountDBContext;
 import dl.RoomRentalDBContext;
 import dl.ServiceDBContext;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Account;
 import model.Pagination;
 import model.RoomRental;
 
@@ -27,7 +29,10 @@ public class DetailRentalController extends BaseAuthAdminController {
 
     @Override
     protected boolean isPermission(HttpServletRequest request) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AccountDBContext accountDB = new AccountDBContext();
+        Account account = (Account) request.getSession().getAttribute("admin");
+        boolean isPer = accountDB.getPermision(account, "RENTAL", "READ");
+        return isPer;
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

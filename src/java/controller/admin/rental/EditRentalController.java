@@ -6,6 +6,7 @@
 package controller.admin.rental;
 
 import controller.admin.auth.BaseAuthAdminController;
+import dl.AccountDBContext;
 import dl.CustomerDBContext;
 import dl.RoomDBContext;
 import dl.RoomRentalDBContext;
@@ -17,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Account;
 import model.Customer;
 import model.Room;
 import model.RoomRental;
@@ -29,7 +31,10 @@ public class EditRentalController extends BaseAuthAdminController {
 
     @Override
     protected boolean isPermission(HttpServletRequest request) {
-        return true;
+        AccountDBContext accountDB = new AccountDBContext();
+        Account account = (Account) request.getSession().getAttribute("admin");
+        boolean isPer = accountDB.getPermision(account, "RENTAL", "UPDATE");
+        return isPer;
     }
 
     @Override

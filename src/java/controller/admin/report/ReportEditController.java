@@ -7,6 +7,7 @@ package controller.admin.report;
 
 import com.google.gson.Gson;
 import controller.admin.auth.BaseAuthAdminController;
+import dl.AccountDBContext;
 import dl.ReportDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Account;
 import model.Report;
 
 /**
@@ -25,7 +27,10 @@ public class ReportEditController extends BaseAuthAdminController {
 
     @Override
     protected boolean isPermission(HttpServletRequest request) {
-        return true;
+        AccountDBContext accountDB = new AccountDBContext();
+        Account account = (Account) request.getSession().getAttribute("admin");
+        boolean isPer = accountDB.getPermision(account, "REPORT", "UPDATE");
+        return isPer;
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

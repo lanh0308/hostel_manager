@@ -25,7 +25,10 @@ public class ChangePassRoomController extends BaseAuthAdminController {
 
     @Override
     protected boolean isPermission(HttpServletRequest request) {
-        return true;
+        AccountDBContext accountDB = new AccountDBContext();
+        Account account = (Account) request.getSession().getAttribute("admin");
+        boolean isPer = accountDB.getPermision(account, "ROOM", "UPDATE");
+        return isPer;
     }
 
     @Override

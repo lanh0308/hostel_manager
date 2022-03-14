@@ -7,6 +7,7 @@ package controller.admin.room_category;
 
 import controller.admin.auth.BaseAuthAdminController;
 import controller.auth.BaseAuthController;
+import dl.AccountDBContext;
 import dl.BedCategoryDBContext;
 import dl.RoomCategoryDBContext;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Account;
 import model.BedCategory;
 import model.RoomCategory;
 
@@ -26,7 +28,10 @@ public class ListRoomCategory extends BaseAuthAdminController {
     
     @Override
     protected boolean isPermission(HttpServletRequest request) {
-        return true;
+        AccountDBContext accountDB = new AccountDBContext();
+        Account account = (Account) request.getSession().getAttribute("admin");
+        boolean isPer = accountDB.getPermision(account, "CATEGORY", "READ");
+        return isPer;
     }
 
     
