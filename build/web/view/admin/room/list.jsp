@@ -46,6 +46,9 @@
                                             <a href="/admin/room/edit?id=${room.id}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 ">Edit</a>
                                         </li>
                                         <li>
+                                            <a href="/admin/room/changepass?id=${room.id}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 ">Change pass</a>
+                                        </li>
+                                        <li>
                                             <a href="/admin/room/delete?id=${room.id}" class="block py-2 px-4 text-sm text-red-600 hover:bg-gray-100">Delete</a>
                                         </li>
                                     </ul>

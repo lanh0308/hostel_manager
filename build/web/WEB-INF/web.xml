@@ -165,6 +165,10 @@
         <servlet-name>ReportEditController</servlet-name>
         <servlet-class>controller.admin.report.ReportEditController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChangePassRoomController</servlet-name>
+        <servlet-class>controller.admin.room.ChangePassRoomController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -320,6 +324,10 @@
     <servlet-mapping>
         <servlet-name>ReportEditController</servlet-name>
         <url-pattern>/admin/report/edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePassRoomController</servlet-name>
+        <url-pattern>/admin/room/changepass</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
