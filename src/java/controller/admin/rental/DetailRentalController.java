@@ -8,6 +8,7 @@ package controller.admin.rental;
 import controller.admin.auth.BaseAuthAdminController;
 import dl.AccountDBContext;
 import dl.RoomRentalDBContext;
+import dl.ServiceCategoryDBContext;
 import dl.ServiceDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Account;
 import model.Pagination;
 import model.RoomRental;
+import model.ServiceCategory;
 
 /**
  *
@@ -65,6 +67,9 @@ public class DetailRentalController extends BaseAuthAdminController {
         request.setAttribute("pagination", pagination);
         request.setAttribute("start_dates", start_dates);
         request.setAttribute("end_dates", end_dates);
+        ServiceCategoryDBContext serviceCategoryDB = new ServiceCategoryDBContext();
+        ArrayList<ServiceCategory> serviceCategorys = serviceCategoryDB.getServiceCategorys();
+        request.setAttribute("serviceCategorys", serviceCategorys);
         request.getRequestDispatcher("/view/admin/rental/detail.jsp").forward(request, response);
     }
 
