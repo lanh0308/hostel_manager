@@ -11,11 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <aside class="w-64 fixed top-0 left-0" aria-label="Sidebar">
-            <div class="px-3 py-4 overflow-y-auto rounded bg-pink-50 min-h-screen">
-                <div class="mb-6 flex items-center justify-center flex-col">
-                    <h4 class="text-xl mt-3">Trọ Lan Anh</h4>
-                </div>
+        <aside class="w-64 fixed top-0 left-0 bg-white min-h-screen flex flex-col justify-center" aria-label="Sidebar">
+            <div class="px-3 py-4 overflow-y-auto rounded mb-20">
                 <ul class="space-y-2 w-full">
                     <li>
                         <a href="/dashboard" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-100 ">

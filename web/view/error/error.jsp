@@ -9,9 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://unpkg.com/flowbite@1.3.4/dist/flowbite.min.css" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="min-h-screen w-full flex justify-center items-center">
+            <h1 class="text-center text-6xl">Oops 404! Access denied!</h1>
+        </div>
+        <script src="https://unpkg.com/flowbite@1.3.4/dist/flowbite.js"></script>
     </body>
 </html>

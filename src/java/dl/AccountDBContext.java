@@ -22,14 +22,14 @@ public class AccountDBContext extends DBContext {
     public boolean getPermision(Account account, String feature, String code) {
         try {
             String sql = "SELECT COUNT(*) as total \n"
-                    + "FROM [account] INNER JOIN [user_group]\n"
-                    + "ON [user_group].[username] = [account].[username]\n"
+                    + "FROM [account] INNER JOIN [account_group]\n"
+                    + "ON [account_group].[username] = [account].[username]\n"
                     + "INNER JOIN [group]\n"
-                    + "ON [group].[id] = [user_group].[group_id]\n"
-                    + "INNER JOIN [group_action] \n"
-                    + "ON [group_action].[group_id] = [user_group].[group_id]\n"
-                    + "INNER JOIN [action] ON [action].[id] = [group_action].[action_id]\n"
-                    + "WHERE [account].[username] = ? AND LOWER([action].[feature]) = LOWER(?) AND LOWER([action].[code]) = LOWER(?)";
+                    + "ON [group].[id] = [account_group].[group_id]\n"
+                    + "INNER JOIN [group_feature] \n"
+                    + "ON [group_feature].[group_id] = [account_group].[group_id]\n"
+                    + "INNER JOIN [feature] ON [feature].[id] = [group_feature].[feature_id]\n"
+                    + "WHERE [account].[username] = ? AND LOWER([feature].[feature]) = LOWER(?) AND LOWER([feature].[code]) = LOWER(?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, account.getUsername());
             stm.setString(2, feature);

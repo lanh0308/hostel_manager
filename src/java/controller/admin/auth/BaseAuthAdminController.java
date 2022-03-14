@@ -43,7 +43,7 @@ public abstract class BaseAuthAdminController extends HttpServlet {
         if (isAuth(request)) {
             processGet(request, response);
         } else {
-            request.getRequestDispatcher("/views/error/error.jsp").forward(request, response);
+            request.getRequestDispatcher("/view/error/error.jsp").forward(request, response);
         }
     }
 
