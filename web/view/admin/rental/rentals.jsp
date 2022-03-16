@@ -41,7 +41,7 @@
                                         <button type="submit" class="ml-3 inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Search</button>
                                     </form>
                                     <div class="flex items-center space-x-3">
-                                        <a href="/admin/rental/sendemail" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Send email</a>
+                                       
                                         <a href="/admin/rental/add" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Add rental</a>
                                     </div>
                                 </div>

@@ -32,13 +32,13 @@
                         <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
                             <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
                                 <li>
-                                    <a href="/" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Home</a>
+                                    <a href="/" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0">Home</a>
                                 </li>
                                 <li>
-                                    <a href="/room" class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0" aria-current="page">Room</a>
+                                    <a href="/room" class="block py-2 pr-4 pl-3 text-white bg-pink-700 rounded md:bg-transparent md:text-pink-700 md:p-0" aria-current="page">Room</a>
                                 </li>
                                 <li>
-                                    <a href="/login" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">login</a>
+                                    <a href="/login" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0">login</a>
                                 </li>
                             </ul>
                         </div>
@@ -52,11 +52,11 @@
                         <c:forEach items="${rooms}" var="room">
                             <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md 
                                  <c:if test="${!room.isEmpty}">
-                                     bg-red-200
+                                     bg-red-100
                                  </c:if>
                                  ">
                                 <div class="flex flex-col items-center pb-10 pt-10">
-                                    <h3 class="mb-1 text-xl font-medium text-gray-900">${room.name}</h3>
+                                    <h3 class="mb-1 text-xl font-medium text-gray-900">P${room.name}</h3>
                                     <span class="text-sm text-gray-500">${room.roomCategory.name}</span>
                                     <c:choose>
                                         <c:when test="${!room.isEmpty}">
@@ -66,7 +66,7 @@
                                             <span class="text-sm text-green-500">Phòng đang trống</span>
                                         </c:otherwise>
                                     </c:choose>
-                                    <span class="text-md font-medium text-blue-500" id="price-${room.id}">${room.roomCategory.unit_price}</span>
+                                    <span class="text-md font-medium text-pink-500" id="price-${room.id}">${room.roomCategory.unit_price}</span>
                                     <script>
                                     var price = ${room.roomCategory.unit_price};
                                     price = price.toLocaleString('vi', {style: 'currency', currency: 'VND'});

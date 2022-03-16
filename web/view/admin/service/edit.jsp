@@ -113,7 +113,7 @@
         console.log(data);
         $.ajax({
         method: "POST",
-                url: "/admin/rental/service/edit",
+                url: "",
                 data: data,
                 statusCode: {
                 404: function() {
@@ -133,10 +133,11 @@
                 $('#error-content').text(data?.detailMessage);
         $("#error").removeClass("hidden")
         } else{
-        $("#error").addClass("hidden")
-                $('#success-content').text("Update success");
-        $("#success").removeClass("hidden")
-        }
+            $("#error").addClass("hidden")
+            $('#success-content').text("Update success");
+            $("#success").removeClass("hidden")
+                location.href="/admin/rental/detail?id=${service.room_retal.id}"
+            }
         })
         })
     </script>

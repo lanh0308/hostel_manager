@@ -44,6 +44,7 @@ public class AddServiceController extends BaseAuthAdminController {
         int id = Integer.parseInt(request.getParameter("id"));
         RoomRentalDBContext romRentalDBContext = new RoomRentalDBContext();
         RoomRental roomRental = romRentalDBContext.getRoomRental(id);
+        
         request.setAttribute("roomRental", roomRental);
         ServiceCategoryDBContext serviceCategoryDB = new ServiceCategoryDBContext();
         ArrayList<ServiceCategory> serviceCategorys = serviceCategoryDB.getServiceCategorys();
@@ -57,12 +58,18 @@ public class AddServiceController extends BaseAuthAdminController {
         int id = Integer.parseInt(request.getParameter("id"));
         String start_date_string = request.getParameter("start_date");
         String end_date_string = request.getParameter("end_date");
-        String old_indicator_string = request.getParameter("old_indicator");
-        String new_indicator_string = request.getParameter("new_indicator");
-        String service_category_string = request.getParameter("service_category");
-        int old_indicator = Integer.parseInt(old_indicator_string);
-        int new_indicator = Integer.parseInt(new_indicator_string);
-        int service_category = Integer.parseInt(service_category_string);
+        String old_indicator_dien_string = request.getParameter("old_indicator_dien");
+        String new_indicator_dien_string = request.getParameter("new_indicator_dien");
+        String service_category_dien_string = request.getParameter("service_category_dien");
+        int old_indicator_dien = Integer.parseInt(old_indicator_dien_string);
+        int new_indicator_dien = Integer.parseInt(new_indicator_dien_string);
+        int service_category_dien = Integer.parseInt(service_category_dien_string);
+        String old_indicator_nuoc_string = request.getParameter("old_indicator_nuoc");
+        String new_indicator_nuoc_string = request.getParameter("new_indicator_nuoc");
+        String service_category_nuoc_string = request.getParameter("service_category_nuoc");
+        int old_indicator_nuoc = Integer.parseInt(old_indicator_nuoc_string);
+        int new_indicator_nuoc = Integer.parseInt(new_indicator_nuoc_string);
+        int service_category_nuoc = Integer.parseInt(service_category_nuoc_string);
 
         Date start_date = Date.valueOf(start_date_string);
         Date end_date = Date.valueOf(end_date_string);
@@ -71,19 +78,47 @@ public class AddServiceController extends BaseAuthAdminController {
         RoomRental roomRental = roomRentalDB.getRoomRental(id);
 
         ServiceCategoryDBContext serviceCategoryDB = new ServiceCategoryDBContext();
-        ServiceCategory serviceCategory = serviceCategoryDB.getServiceCategory(service_category);
+        ArrayList<ServiceCategory> serviceCategorys = serviceCategoryDB.getServiceCategorys();
+        ServiceCategory serviceCategoryDien = serviceCategoryDB.getServiceCategory(service_category_dien);
+        ServiceCategory serviceCategoryNuoc = serviceCategoryDB.getServiceCategory(service_category_nuoc);
 
         ServiceDBContext serviceDB = new ServiceDBContext();
         Service service = new Service();
         service.setRoom_retal(roomRental);
-        service.setService_category(serviceCategory);
+        service.setService_category(serviceCategoryDien);
         service.setStart_date(start_date);
         service.setEnd_date(end_date);
         service.setState(false);
-        service.setNew_indicator(new_indicator);
-        service.setOld_indicator(old_indicator);
-
+        service.setNew_indicator(new_indicator_dien);
+        service.setOld_indicator(old_indicator_dien);
         serviceDB.insertService(service);
+
+        serviceDB = new ServiceDBContext();
+        service = new Service();
+        service.setRoom_retal(roomRental);
+        service.setService_category(serviceCategoryNuoc);
+        service.setStart_date(start_date);
+        service.setEnd_date(end_date);
+        service.setState(false);
+        service.setNew_indicator(new_indicator_nuoc);
+        service.setOld_indicator(old_indicator_nuoc);
+        serviceDB.insertService(service);
+
+        for (ServiceCategory serviceCategory : serviceCategorys) {
+            if (serviceCategory.getId()!= service_category_dien && serviceCategory.getId() != service_category_nuoc) {
+                serviceDB = new ServiceDBContext();
+                service = new Service();
+                service.setRoom_retal(roomRental);
+                service.setService_category(serviceCategory);
+                service.setStart_date(start_date);
+                service.setEnd_date(end_date);
+                service.setState(false);
+                service.setNew_indicator(0);
+                service.setOld_indicator(0);
+                serviceDB.insertService(service);
+            }
+        }
+
         String json = new Gson().toJson(service);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

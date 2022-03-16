@@ -21,6 +21,7 @@
             Pagination pagination = (Pagination) request.getAttribute("pagination");
             ArrayList<Date> start_dates = (ArrayList<Date>) request.getAttribute("start_dates");
             ArrayList<Date> end_dates = (ArrayList<Date>) request.getAttribute("end_dates");
+            
         %>
     </head>
     <jsp:include page="../base/header.jsp" />
@@ -193,6 +194,9 @@
                                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                         new indicator
                                                     </th>
+                                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                        price
+                                                    </th>
                                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                         payment
                                                     </th>
@@ -219,6 +223,14 @@
                                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                                             ${item.new_indicator}
                                                         </td>
+                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap " id="price-service-${item.id}">
+                                                            ${item.getPrice()}
+                                                        </td>
+                                                         <script>
+                                                            var money =  ${item.getPrice()};
+                                                            money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+                                                            $("#price-service-${item.id}").text(money);
+                                                        </script>
                                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                                             <c:choose>
                                                                 <c:when test="${item.state}">

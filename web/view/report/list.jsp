@@ -22,7 +22,18 @@
     </head>
     <body>
         <div class="container mx-auto">
-            <h3 class="mt-10 mb-10 text-5xl text-center">Report</h3>
+            <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="mt-10 mb-10 text-5xl text-center">Report</h2>
+                    </div>
+                    <div class="flex justify-end space-x-4">
+                        <a href="/view" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">View</a>
+                        <a href="/history" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">History</a>
+                        <a href="/report" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Report</a>
+                        <a href="/logout" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Logout</a>
+                    </div>
+                </div>
+            
             <div class="flex flex-col">
                 <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">

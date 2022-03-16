@@ -29,6 +29,7 @@
             </div>
             <div class="w-full px-10 py-5">
                 <h3 class="mt-5 mb-10 text-5xl text-center">Report</h3>
+
                 <div class="mb-5">
                     <form class="flex items-center" method="get" action="/admin/report">
                         <div class="mr-3">
@@ -166,9 +167,9 @@
                                     <textarea required id="content" rows="5" name="content" disabled class="disabled block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="process note..."></textarea>
                                 </div>
                                 <div class="mb-6">
-                                    <label for="status" class="block mb-2 text-sm font-medium text-gray-900">Bed category</label>
-                                    <select id="status" name="status" required class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
-                                        <option value="pendding">pending</option>
+                                    <label for="status-form" class="block mb-2 text-sm font-medium text-gray-900">Bed category</label>
+                                    <select id="status-form" name="status" required class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                                        <option value="pending">pending</option>
                                         <option value="approved">approved</option>
                                         <option value="rejected">rejected</option>
                                     </select>
@@ -245,7 +246,7 @@
             $("#button-open-modal").click();
             $("#id").val(report.id);
             $("#process_note").val(report.process_note);
-            $("#status").val(report.status.toLowerCase());
+            $("#status-form").val(report.status.toLowerCase());
         }
 
         $("#from-report-edit").on("submit", function (e) {
@@ -253,8 +254,9 @@
             const data = {
                 id: $("#id").val(),
                 process_note: $("#process_note").val(),
-                status: $("#status").val(),
+                status: $("#status-form").val(),
             }
+            console.log(data);
             $.ajax({
                 method: "post",
                 url: "/admin/report/edit",
@@ -262,6 +264,7 @@
             }).done(function (data) {
                 $("#process_note-content-" + data.id).text(data.process_note)
                 $("#status-content-" + data.id).text(data.status)
+                $("#button-open-modal").click();
             })
         })
     </script>

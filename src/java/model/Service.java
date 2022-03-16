@@ -88,8 +88,8 @@ public class Service {
     
     
     public BigDecimal getPrice(){
-        int indicator = new_indicator-old_indicator;
-        if(indicator>0){
+        int indicator = new_indicator - old_indicator;
+        if(indicator > 0 || ( indicator == 0 && (service_category.getId() == 1 || service_category.getId() == 2))){
             return new BigDecimal(service_category.getUnit_price()*indicator);
         }else{
             return new BigDecimal(service_category.getUnit_price());

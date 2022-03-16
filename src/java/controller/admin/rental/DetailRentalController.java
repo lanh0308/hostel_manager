@@ -63,12 +63,14 @@ public class DetailRentalController extends BaseAuthAdminController {
         ArrayList<Date> end_dates = serviceDB.getAllEndDate(id);
         Pagination pagination = new Pagination(pageIndex, pageSize, serviceDB.getSize(id, start_date, end_date));
         RoomRental roomRental = roomRentalDB.getRoomRentalBySearch(id, start_date, end_date, pageIndex, pageSize);
+        
         request.setAttribute("roomRental", roomRental);
         request.setAttribute("pagination", pagination);
         request.setAttribute("start_dates", start_dates);
         request.setAttribute("end_dates", end_dates);
         ServiceCategoryDBContext serviceCategoryDB = new ServiceCategoryDBContext();
         ArrayList<ServiceCategory> serviceCategorys = serviceCategoryDB.getServiceCategorys();
+       
         request.setAttribute("serviceCategorys", serviceCategorys);
         request.getRequestDispatcher("/view/admin/rental/detail.jsp").forward(request, response);
     }

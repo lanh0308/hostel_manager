@@ -26,7 +26,7 @@ public class DeleteServiceAdminController extends BaseAuthAdminController {
     protected boolean isPermission(HttpServletRequest request) {
         AccountDBContext accountDB = new AccountDBContext();
         Account account = (Account) request.getSession().getAttribute("admin");
-        boolean isPer = accountDB.getPermision(account, "SERVICE", "DELETE");
+        boolean isPer = accountDB.getPermision(account, "SERVICE", "REMOVE");
         return isPer;
     }
    

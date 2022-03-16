@@ -16,6 +16,7 @@
     </head>
     <body>
         <div class="flex">
+            
             <div class="w-full px-10 py-5">
                 <div class="flex justify-center items-center" style="min-height: 93vh">
                     <form style="width: 500px" action="/report/create" method="post">
@@ -36,6 +37,7 @@
                             <textarea required id="content" rows="10" name="content" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="content..."></textarea>
                         </div>
                         <button type="submit" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+                        <button onclick="location.href='/report'" class="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:ring-pink-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Back</button>
                     </form>
                 </div>
             </div>

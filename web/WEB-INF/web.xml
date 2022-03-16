@@ -11,7 +11,7 @@
     <filter-mapping>
         <filter-name>FilterAuth</filter-name>
         <url-pattern>/report/*</url-pattern>
-         <url-pattern>/history/*</url-pattern>
+        <url-pattern>/history/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AuthAdminFilter</filter-name>
@@ -149,10 +149,6 @@
     <servlet>
         <servlet-name>EditCustomerController</servlet-name>
         <servlet-class>controller.admin.customer.EditCustomerController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>RentalSendEmail</servlet-name>
-        <servlet-class>controller.admin.rental.RentalSendEmail</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutAdminController</servlet-name>
@@ -309,10 +305,6 @@
     <servlet-mapping>
         <servlet-name>EditCustomerController</servlet-name>
         <url-pattern>/admin/rental/customer/edit</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>RentalSendEmail</servlet-name>
-        <url-pattern>/admin/rental/sendemail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LogoutAdminController</servlet-name>

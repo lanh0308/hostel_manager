@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <aside class="w-64 fixed top-0 left-0 bg-white min-h-screen flex flex-col justify-center" aria-label="Sidebar">
+        <aside class="w-64 fixed top-0 left-0 bg-pink-300 min-h-screen flex flex-col justify-center" aria-label="Sidebar">
             <div class="px-3 py-4 overflow-y-auto rounded mb-20">
                 <ul class="space-y-2 w-full">
                     <li>
@@ -35,7 +35,7 @@
                     <li>
                         <a href="/admin/room/category" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>                                
-                            <span class="flex-1 ml-3 whitespace-nowrap">Category</span>
+                            <span class="flex-1 ml-3 whitespace-nowrap">Room Category</span>
                         </a>
                     </li>
                     <li>

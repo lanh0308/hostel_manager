@@ -20,6 +20,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <%
             RoomRental roomRental = (RoomRental) request.getAttribute("roomRental");
+
             Pagination pagination = (Pagination) request.getAttribute("pagination");
             ArrayList<Date> start_dates = (ArrayList<Date>) request.getAttribute("start_dates");
             ArrayList<Date> end_dates = (ArrayList<Date>) request.getAttribute("end_dates");
@@ -52,6 +53,8 @@
                         </form>
                     </div>
                     <div class="flex justify-end space-x-4">
+                        <a href="/view" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">View</a>
+                        <a href="/history" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">History</a>
                         <a href="/report" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Report</a>
                         <a href="/logout" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">logout</a>
                     </div>
@@ -60,30 +63,29 @@
                     <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
                         <div class="overflow-hidden shadow-md sm:rounded-lg">
                             <table class="min-w-full">
-                                <thead class="bg-pink-100">
+                                <thead class="bg-blue-400">
                                     <tr>
-                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-white uppercase ">
                                             Room
                                         </th>
-                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-white uppercase ">
                                             Area
                                         </th>
-                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-white uppercase">
                                             Start date
                                         </th>
-                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-white uppercase ">
                                             End date
                                         </th>
-                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-white uppercase ">
                                             Name
                                         </th>
-                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-white uppercase">
                                             phone
                                         </th>
-                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                            address
+                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-white uppercase">
                                         </th>
-                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                        <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-white uppercase ">
                                             cmnd
                                         </th>
                                         <th scope="col" class="relative py-3 px-6">
@@ -94,7 +96,7 @@
                                 <tbody>
                                     <tr class="bg-white border-b">
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                            ${roomRental.room.name}
+                                            P${roomRental.room.name}
                                         </td>
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap">
                                             ${roomRental.room.roomCategory.areage}m&sup2;
@@ -131,23 +133,19 @@
                             <div class="flex w-full">
                                 <div class="flex space-x-4">
                                     <p class="text-xl font-medium">Time: ${service.key}</p>
-                                    <p class="text-xl font-medium">Price: <span id="price-${service.key}">${roomRental.getToltalPriceByDate(service.key)}</span></p>
-                                    <script>
-                                        var price = Number.parseInt($("#price-${service.key}").text());
-                                        price = price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
-                                        $("#price-${service.key}").text(price);
-                                    </script>
+
                                 </div>
                                 <div class="ml-auto flex items-center">
-                                    <input  data-name="payment-${service.key}[]" id="payment-${service.key}" onchange="paymentAllChange(this)" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
+                                    <input disabled data-name="payment-${service.key}[]" id="payment-${service.key}" onchange="paymentAllChange(this)" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
                                     <label for="payment-${service.key}" class="ml-2 font-medium text-gray-900">Thanh toán</label>
                                 </div>
                             </div>
+                                
                             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
                                     <div class="overflow-hidden shadow-md sm:rounded-lg">
                                         <table class="min-w-full">
-                                            <thead class="bg-pink-100">
+                                            <thead class="bg-pink-100 table-serive">
                                                 <tr>
                                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                         Name
@@ -165,10 +163,13 @@
                                                         new indicator
                                                     </th>
                                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                        payment
+                                                        unit price
                                                     </th>
                                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                        action
+                                                        price
+                                                    </th>
+                                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                        payment
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -190,20 +191,49 @@
                                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                                             ${item.new_indicator}
                                                         </td>
-                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                                            <c:choose>
-                                                                <c:when test="${item.state}">
-                                                                    <input name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" checked>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <input name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
-                                                                </c:otherwise>
-                                                            </c:choose>
+                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap " id="unit-price-${item.id}">
+                                                            ${item.service_category.unit_price}
                                                         </td>
-                                                    </tr>
-                                                </c:forEach>
+                                                         <script>
+                                                            var money = ${item.service_category.unit_price};
+                                                            money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+                                                            $("#unit-price-${item.id}").text(money);
+                                                        </script>
+                                                        
+                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap " id="price-service-${item.id}">
+                                                            ${item.getPrice()}
+                                                        </td>
+                                                        <script>
+                                                            var money = ${item.getPrice()};
+                                                            money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+                                                            $("#price-service-${item.id}").text(money);
+                                                        </script>
+                                                <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                    <c:choose>
+                                                        <c:when test="${item.state}">
+                                                            <input disabled name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" checked>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <input disabled name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                </tr>
+                                            </c:forEach>
                                             </tbody>
                                         </table>
+                                    </div>
+
+                                    <div class="flex ml-auto justify-end mt-5 font-medium items-center">
+                                        <div>
+                                            <p class="texl-md text-red-600" id="checkout-${service.key}">Chưa thanh toán</p>
+                                            <p class="text-xl font-medium">Total price: <span id="price-${service.key}">${roomRental.getToltalPriceByDate(service.key)}</span></p>
+                                            <script>
+                                                var price = Number.parseInt($("#price-${service.key}").text());
+                                                price = price.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+                                                $("#price-${service.key}").text(price);
+                                            </script>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -250,20 +280,20 @@
     </div>
     <script src="https://unpkg.com/flowbite@1.3.4/dist/flowbite.js"></script>                    
     <script>
-                                                                        const url_string = window.location.href;
-                                                                        const url = new URL(url_string);
-                                                                        const paginationLinks = document.querySelectorAll(".page-link");
-                                                                        if (paginationLinks) {
-                                                                            paginationLinks.forEach(item => {
-                                                                                var search = location.search.substring(1);
-                                                                                const params = search ? JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"')
-                                                                                        .replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
-                                                                                const page = item.getAttribute("data");
-                                                                                params.page = page;
-                                                                                const href = new URLSearchParams(params).toString();
-                                                                                item.setAttribute("href", "?" + href);
-                                                                            })
-                                                                        }
+                                            const url_string = window.location.href;
+                                            const url = new URL(url_string);
+                                            const paginationLinks = document.querySelectorAll(".page-link");
+                                            if (paginationLinks) {
+                                                paginationLinks.forEach(item => {
+                                                    var search = location.search.substring(1);
+                                                    const params = search ? JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"')
+                                                            .replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
+                                                    const page = item.getAttribute("data");
+                                                    params.page = page;
+                                                    const href = new URLSearchParams(params).toString();
+                                                    item.setAttribute("href", "?" + href);
+                                                })
+                                            }
     </script>
     <script>
         <c:forEach items="${roomRental.services}" var="service">
@@ -275,6 +305,13 @@
         })
         if ($("input[name='payment-${service.key}[]']").length == quantity) {
             $("#payment-${service.key}").prop('checked', true);
+            $("#checkout-${service.key}").text("Đã thanh toán");
+            $("#checkout-${service.key}").removeClass("text-red-600");
+            $("#checkout-${service.key}").addClass("text-blue-600");
+        }else{
+             $("#checkout-${service.key}").text("Chưa thanh toán");
+             $("#checkout-${service.key}").removeClass("text-blue-600");
+             $("#checkout-${service.key}").addClass("text-red-600");
         }
         </c:forEach>
         const paymentAllChange = (e) => {

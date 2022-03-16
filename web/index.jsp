@@ -32,13 +32,13 @@
                         <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
                             <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
                                 <li>
-                                    <a href="/" class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0" aria-current="page">Home</a>
+                                    <a href="/" class="block py-2 pr-4 pl-3 text-white bg-pink-700 rounded md:bg-transparent md:text-pink-700 md:p-0" aria-current="page">Home</a>
                                 </li>
                                 <li>
-                                    <a href="/room" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Room</a>
+                                    <a href="/room" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-pink-50 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0">Room</a>
                                 </li>
                                 <li>
-                                    <a href="/login" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">login</a>
+                                    <a href="/login" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-pink-50 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0">login</a>
                                 </li>
                             </ul>
                         </div>
@@ -120,30 +120,30 @@
                             <ul role="list" class="my-7 space-y-5">
                                 <li class="flex space-x-3">
                                     <!-- Icon -->
-                                    <svg class="flex-shrink-0 w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <svg class="flex-shrink-0 w-5 h-5 text-pink-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                                     <span class="text-base font-normal leading-tight text-gray-500">${roomCategory.areage}m&sup2</span>
                                 </li>
                                 <li class="flex space-x-3">
-                                    <svg class="flex-shrink-0 w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <svg class="flex-shrink-0 w-5 h-5 text-pink-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                                     <span class="text-base font-normal leading-tight text-gray-500">Wifi</span>
                                 </li>
                                 <li class="flex space-x-3">
-                                    <svg class="flex-shrink-0 w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <svg class="flex-shrink-0 w-5 h-5 text-pink-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                                     <span class="text-base font-normal leading-tight text-gray-500">Điều hòa</span>
                                 </li>
                                 <li class="flex space-x-3">
-                                    <svg class="flex-shrink-0 w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <svg class="flex-shrink-0 w-5 h-5 text-pink-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                                     <span class="text-base font-normal leading-tight text-gray-500">Nóng lạnh</span>
                                 </li>
                                 <li class="flex space-x-3">
-                                    <svg class="flex-shrink-0 w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                    <svg class="flex-shrink-0 w-5 h-5 text-pink-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                                     <span class="text-base font-normal leading-tight text-gray-500">${roomCategory.desk_number} bàn học</span>
                                 </li>
                                 <li class="flex space-x-3 <c:if test="${!roomCategory.is_balcony}">line-through decoration-gray-500</c:if>">
                                         <svg class="flex-shrink-0 w-5 h-5
                                         <c:choose>
                                             <c:when test="${roomCategory.is_balcony}">
-                                                text-blue-600
+                                                text-pink-600
                                             </c:when> 
                                             <c:otherwise>
                                                 text-gray-400
@@ -155,7 +155,7 @@
                                         <svg class="flex-shrink-0 w-5 h-5
                                         <c:choose>
                                             <c:when test="${roomCategory.is_kitchen}">
-                                                text-blue-600
+                                                text-pink-600
                                             </c:when> 
                                             <c:otherwise>
                                                 text-gray-400
@@ -167,7 +167,7 @@
                                         <svg class="flex-shrink-0 w-5 h-5
                                         <c:choose>
                                             <c:when test="${roomCategory.is_window}">
-                                                text-blue-600
+                                                text-pink-600
                                             </c:when> 
                                             <c:otherwise>
                                                 text-gray-400
@@ -176,7 +176,7 @@
                                     <span class="text-base font-normal leading-tight text-gray-500">Cửa sổ</span>
                                 </li>
                             </ul>
-                            <button type="button" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Liên hệ</button>
+                            <button type="button" class="text-white bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Liên hệ</button>
                         </div>
                     </c:forEach>
                 </div>
