@@ -86,7 +86,7 @@
                                         <c:forEach items="${reports}" var="report">
                                             <tr class="bg-white border-b">
                                                 <td class="py-4 px-6 text-sm font-medium text-red-600">
-                                                    phòng ${report.room.name}
+                                                    P${report.room.name}
                                                 </td>
                                                 <td class="py-4 px-6 text-sm font-medium text-gray-900">
                                                     ${report.customer.name}

@@ -81,7 +81,7 @@
                                             Name
                                         </th>
                                         <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-white uppercase">
-                                            phone
+                                            Phone
                                         </th>
                                         <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-white uppercase">
                                         </th>
@@ -140,7 +140,7 @@
                                     <label for="payment-${service.key}" class="ml-2 font-medium text-gray-900">Thanh toán</label>
                                 </div>
                             </div>
-                                
+
                             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
                                     <div class="overflow-hidden shadow-md sm:rounded-lg">
@@ -166,6 +166,9 @@
                                                         unit price
                                                     </th>
                                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                        quantity
+                                                    </th>
+                                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                         price
                                                     </th>
                                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
@@ -186,20 +189,43 @@
                                                             ${item.end_date}
                                                         </td>
                                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                                            ${item.old_indicator}
+                                                            <c:choose>
+                                                                <c:when test="${item.service_category.id == 1 || item.service_category.id==2}">
+                                                                    ${item.old_indicator}
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </td>
                                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                                            ${item.new_indicator}
+                                                            <c:choose>
+                                                                <c:when test="${item.service_category.id == 1 || item.service_category.id==2}">
+                                                                    ${item.new_indicator}
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </td>
                                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap " id="unit-price-${item.id}">
                                                             ${item.service_category.unit_price}
                                                         </td>
-                                                         <script>
+                                                        <script>
                                                             var money = ${item.service_category.unit_price};
                                                             money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
                                                             $("#unit-price-${item.id}").text(money);
                                                         </script>
-                                                        
+                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                            <c:choose>
+                                                                <c:when test="${item.service_category.id == 1 || item.service_category.id==2}">
+                                                                    ${item.new_indicator - item.old_indicator }
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    1
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
                                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap " id="price-service-${item.id}">
                                                             ${item.getPrice()}
                                                         </td>
@@ -208,18 +234,18 @@
                                                             money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
                                                             $("#price-service-${item.id}").text(money);
                                                         </script>
-                                                <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                                    <c:choose>
-                                                        <c:when test="${item.state}">
-                                                            <input disabled name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" checked>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <input disabled name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </td>
-                                                </tr>
-                                            </c:forEach>
+                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                            <c:choose>
+                                                                <c:when test="${item.state}">
+                                                                    <input disabled name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" checked>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <input disabled name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>
@@ -280,20 +306,20 @@
     </div>
     <script src="https://unpkg.com/flowbite@1.3.4/dist/flowbite.js"></script>                    
     <script>
-                                            const url_string = window.location.href;
-                                            const url = new URL(url_string);
-                                            const paginationLinks = document.querySelectorAll(".page-link");
-                                            if (paginationLinks) {
-                                                paginationLinks.forEach(item => {
-                                                    var search = location.search.substring(1);
-                                                    const params = search ? JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"')
-                                                            .replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
-                                                    const page = item.getAttribute("data");
-                                                    params.page = page;
-                                                    const href = new URLSearchParams(params).toString();
-                                                    item.setAttribute("href", "?" + href);
-                                                })
-                                            }
+                                                const url_string = window.location.href;
+                                                const url = new URL(url_string);
+                                                const paginationLinks = document.querySelectorAll(".page-link");
+                                                if (paginationLinks) {
+                                                    paginationLinks.forEach(item => {
+                                                        var search = location.search.substring(1);
+                                                        const params = search ? JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"')
+                                                                .replace(/&/g, '","').replace(/=/g, '":"') + '"}') : {};
+                                                        const page = item.getAttribute("data");
+                                                        params.page = page;
+                                                        const href = new URLSearchParams(params).toString();
+                                                        item.setAttribute("href", "?" + href);
+                                                    })
+                                                }
     </script>
     <script>
         <c:forEach items="${roomRental.services}" var="service">
@@ -307,11 +333,11 @@
             $("#payment-${service.key}").prop('checked', true);
             $("#checkout-${service.key}").text("Đã thanh toán");
             $("#checkout-${service.key}").removeClass("text-red-600");
-            $("#checkout-${service.key}").addClass("text-blue-600");
-        }else{
-             $("#checkout-${service.key}").text("Chưa thanh toán");
-             $("#checkout-${service.key}").removeClass("text-blue-600");
-             $("#checkout-${service.key}").addClass("text-red-600");
+            $("#checkout-${service.key}").addClass("text-green-600");
+        } else {
+            $("#checkout-${service.key}").text("Chưa thanh toán");
+            $("#checkout-${service.key}").removeClass("text-green-600");
+            $("#checkout-${service.key}").addClass("text-red-600");
         }
         </c:forEach>
         const paymentAllChange = (e) => {

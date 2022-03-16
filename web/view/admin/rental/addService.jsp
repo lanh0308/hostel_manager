@@ -5,9 +5,7 @@
 --%>
 
 <%@page import="model.RoomRental"%>
-<%@page import="model.Service"%>
 <%@page import="model.ServiceCategory"%>
-<%@page import="model.RoomCategory"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.BedCategory"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,7 +17,6 @@
         <title>Edit Page</title>
         <%
             ArrayList<ServiceCategory> serviceCategorys = (ArrayList<ServiceCategory>) request.getAttribute("serviceCategorys");
-            Service service = (Service) request.getAttribute("service");
             RoomRental roomRental = (RoomRental) request.getAttribute("roomRental");
         %>
     </head>
@@ -73,7 +70,7 @@
             </div>
             <div class="mb-6">
                 <label for="old_indicator_nuoc" class="block mb-2 text-sm font-medium text-gray-900">Old Indicator Nuoc</label>
-                <input required type="number" id="old_indicator_nuoc" name="old_indicator_nuoc"  value="${roomRental.services.get(roomRental.services.firstKey()).get(1).new_indicator}" class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                <input required type="number" id="old_indicator_nuoc" name="old_indicator_nuoc"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
             </div>
             <div class="mb-6">
                 <label for="new_indicator_nuoc" class="block mb-2 text-sm font-medium text-gray-900">New Indicator Nuoc</label>
@@ -81,7 +78,7 @@
             </div>
             <div class="mb-6">
                 <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date</label>
-                <input required type="date" id="start_date_add" name="start_date" value="${roomRental.services.get(roomRental.services.firstKey()).get(0).end_date}" class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                <input required type="date" id="start_date_add" name="start_date"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
             </div>
             <div class="mb-6">
                 <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900">End Date</label>
