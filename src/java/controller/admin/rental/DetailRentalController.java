@@ -70,7 +70,12 @@ public class DetailRentalController extends BaseAuthAdminController {
         request.setAttribute("end_dates", end_dates);
         ServiceCategoryDBContext serviceCategoryDB = new ServiceCategoryDBContext();
         ArrayList<ServiceCategory> serviceCategorys = serviceCategoryDB.getServiceCategorys();
-       
+        
+        ServiceDBContext serviceDBContext = new ServiceDBContext();
+        Date newDateServices = serviceDBContext.getNewDateServices(id);
+        ArrayList<Integer> oldNumberServices = serviceDBContext.getOldNumberServices(id);
+        request.setAttribute("newDateServices", newDateServices);
+        request.setAttribute("oldNumberServices", oldNumberServices);
         request.setAttribute("serviceCategorys", serviceCategorys);
         request.getRequestDispatcher("/view/admin/rental/detail.jsp").forward(request, response);
     }

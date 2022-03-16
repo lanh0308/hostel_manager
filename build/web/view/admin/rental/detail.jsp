@@ -21,7 +21,7 @@
             Pagination pagination = (Pagination) request.getAttribute("pagination");
             ArrayList<Date> start_dates = (ArrayList<Date>) request.getAttribute("start_dates");
             ArrayList<Date> end_dates = (ArrayList<Date>) request.getAttribute("end_dates");
-            
+
         %>
     </head>
     <jsp:include page="../base/header.jsp" />
@@ -194,7 +194,13 @@
                                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                         new indicator
                                                     </th>
-                                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                        unit price
+                                                    </th>
+                                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                        quantity
+                                                    </th>
+                                                    <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                                         price
                                                     </th>
                                                     <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
@@ -218,35 +224,71 @@
                                                             ${item.end_date}
                                                         </td>
                                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                                            ${item.old_indicator}
-                                                        </td>
-                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                                            ${item.new_indicator}
-                                                        </td>
-                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap " id="price-service-${item.id}">
-                                                            ${item.getPrice()}
-                                                        </td>
-                                                         <script>
-                                                            var money =  ${item.getPrice()};
-                                                            money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
-                                                            $("#price-service-${item.id}").text(money);
-                                                        </script>
-                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                                             <c:choose>
-                                                                <c:when test="${item.state}">
-                                                                    <input name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" checked>
+                                                                <c:when test="${item.service_category.id == 1 || item.service_category.id==2}">
+                                                                    ${item.old_indicator}
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <input name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
+                                                                    -
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </td>
-                                                        <td class="py-4 px-6 text-sm font-medium whitespace-nowrap">
-                                                            <a href="/admin/rental/service/edit?id=${item.id}" class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                                            <a href="/admin/rental/service/delete?id=${item.id}" class="ml-6 text-red-600 dark:text-red-500 hover:underline">Delete</a>
+                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                            <c:choose>
+                                                                <c:when test="${item.service_category.id == 1 || item.service_category.id==2}">
+                                                                    ${item.new_indicator}
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </td>
-                                                    </tr>
-                                                </c:forEach>
+                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap " id="unit-price-${item.id}">
+                                                            ${item.service_category.unit_price}
+                                                        </td>
+                                                <script>
+                                                    var money = ${item.service_category.unit_price};
+                                                    money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+                                                    $("#unit-price-${item.id}").text(money);
+                                                </script>
+                                                <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                    <c:choose>
+                                                        <c:when test="${item.service_category.id == 1 || item.service_category.id==2}">
+                                                            ${item.new_indicator - item.old_indicator }
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            1
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap " id="price-service-${item.id}">
+                                                    ${item.getPrice()}
+                                                </td>
+                                                <script>
+                                                    var money = ${item.getPrice()};
+                                                    money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+                                                    $("#price-service-${item.id}").text(money);
+                                                </script>
+                                                <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                    <c:choose>
+                                                        <c:when test="${item.state}">
+                                                            <input name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" checked>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <input name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                <td class="py-4 px-6 text-sm font-medium flex space-x-4 whitespace-nowrap">
+                                                    <a href="/admin/rental/service/edit?id=${item.id}" class="text-pink-600 hover:underline">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                                    </a>
+                                                    <a href="/admin/rental/service/delete?id=${item.id}" class="text-red-600 hover:underline">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                    </a>
+                                                </td>
+                                                </tr>
+                                            </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>
@@ -330,11 +372,11 @@
         }
     </script>
     <script>
-         const openAddServiceFrom = (id) => {
-             $("#button-add-servide-modal").click();
-             $("#id").val(id);
-         };
-    
+        const openAddServiceFrom = (id) => {
+            $("#button-add-servide-modal").click();
+            $("#id").val(id);
+        };
+
         <c:forEach items="${roomRental.services}" var="service">
         var quantity = 0;
         $("input[name='payment-${service.key}[]']").each(function (item) {

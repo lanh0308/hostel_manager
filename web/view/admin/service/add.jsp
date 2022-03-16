@@ -20,6 +20,7 @@
         <%
             ArrayList<ServiceCategory> serviceCategorys = (ArrayList<ServiceCategory>) request.getAttribute("serviceCategorys");
             RoomRental roomRental =(RoomRental) request.getAttribute("roomRental");
+            
         %>
     </head>
     <jsp:include page="../base/header.jsp" />

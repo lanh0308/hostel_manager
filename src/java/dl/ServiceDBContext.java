@@ -11,8 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -189,7 +187,7 @@ public class ServiceDBContext extends DBContext {
         }
         return services;
     }
-    
+
     public TreeMap<Date, ArrayList<Service>> findByRoomRentalAndSerach(int roomRentalId, String start_date, String end_date, int pageIndex, int pageSize) {
         TreeMap<Date, ArrayList<Service>> services = new TreeMap<>(Collections.reverseOrder());
         try {
@@ -647,8 +645,41 @@ public class ServiceDBContext extends DBContext {
         }
         return start_dates;
     }
-    
-    
-    
-    
+
+    public Date getNewDateServices(int rid) {
+        try {
+            String sql = "select top 1 room_rental_id, service.end_date\n"
+                    + "from service inner join service_category on service.service_id = service_category.id\n"
+                    + "where room_rental_id = ?\n"
+                    + "order by service.start_date desc";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, rid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Date date = rs.getDate("end_date");
+                return date;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+     public  ArrayList<Integer>  getOldNumberServices(int rid) {
+        ArrayList<Integer> servicesTop = new ArrayList<>();
+        try {
+            String sql = "select top 2 room_rental_id, service.old_indicator\n"
+                    + "from service inner join service_category on service.service_id = service_category.id\n"
+                    + "where room_rental_id = ?\n"
+                    + "order by service.start_date desc";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, rid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                servicesTop.add(rs.getInt("old_indicator"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return servicesTop;
+    }
 }

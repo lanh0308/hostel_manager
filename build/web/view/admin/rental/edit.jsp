@@ -64,9 +64,11 @@
                             <input required type="date" id="end_date" name="end_date" value="${requestScope.roomRental.end_date}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
                         </div>
                         <div class="flex items-center h-5 mb-6">
+
+                            <jsp:useBean id="now" class="java.util.Date" />
                             <c:choose>
-                                <c:when test="${requestScope.roomRental.state}">
-                                    <input checked id="state" name="state" aria-describedby="state" value="true" type="checkbox" class="mr-3 w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
+                                <c:when test="${requestScope.roomRental.state && roomRental.end_date.time gt now.time }">
+                                    <input disabled checked id="state" name="state" aria-describedby="state" value="true" type="checkbox" class="mr-3 w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
                                 </c:when>
                                 <c:otherwise>
                                     <input id="state" name="state" aria-describedby="state" value="true" type="checkbox" class="mr-3 w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">

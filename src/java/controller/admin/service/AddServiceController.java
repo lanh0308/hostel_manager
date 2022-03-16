@@ -44,7 +44,7 @@ public class AddServiceController extends BaseAuthAdminController {
         int id = Integer.parseInt(request.getParameter("id"));
         RoomRentalDBContext romRentalDBContext = new RoomRentalDBContext();
         RoomRental roomRental = romRentalDBContext.getRoomRental(id);
-        
+
         request.setAttribute("roomRental", roomRental);
         ServiceCategoryDBContext serviceCategoryDB = new ServiceCategoryDBContext();
         ArrayList<ServiceCategory> serviceCategorys = serviceCategoryDB.getServiceCategorys();
@@ -105,7 +105,7 @@ public class AddServiceController extends BaseAuthAdminController {
         serviceDB.insertService(service);
 
         for (ServiceCategory serviceCategory : serviceCategorys) {
-            if (serviceCategory.getId()!= service_category_dien && serviceCategory.getId() != service_category_nuoc) {
+            if (serviceCategory.getId() != service_category_dien && serviceCategory.getId() != service_category_nuoc) {
                 serviceDB = new ServiceDBContext();
                 service = new Service();
                 service.setRoom_retal(roomRental);

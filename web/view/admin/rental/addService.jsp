@@ -4,6 +4,7 @@
     Author     : lanh0
 --%>
 
+<%@page import="java.sql.Date"%>
 <%@page import="model.RoomRental"%>
 <%@page import="model.ServiceCategory"%>
 <%@page import="java.util.ArrayList"%>
@@ -18,6 +19,8 @@
         <%
             ArrayList<ServiceCategory> serviceCategorys = (ArrayList<ServiceCategory>) request.getAttribute("serviceCategorys");
             RoomRental roomRental = (RoomRental) request.getAttribute("roomRental");
+            Date newDateServices = (Date) request.getAttribute("newDateServices");
+            ArrayList<Integer> oldNumberServices = (ArrayList<Integer>)request.getAttribute("oldNumberServices");
         %>
     </head>
     <body>
@@ -47,7 +50,7 @@
             </div>
             <div class="mb-6">
                 <label for="old_indicator_dien" class="block mb-2 text-sm font-medium text-gray-900">Old Indicator Dien</label>
-                <input required type="number" id="old_indicator_dien" name="old_indicator_dien" value="${roomRental.services.get(roomRental.services.firstKey()).get(0).new_indicator}"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                <input required type="number" id="old_indicator_dien" name="old_indicator_dien" value="${requestScope.oldNumberServices.get(0)}"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
             </div>
             <div class="mb-6">
                 <label for="new_indicator_dien" class="block mb-2 text-sm font-medium text-gray-900">New Indicator Dien</label>
@@ -70,7 +73,7 @@
             </div>
             <div class="mb-6">
                 <label for="old_indicator_nuoc" class="block mb-2 text-sm font-medium text-gray-900">Old Indicator Nuoc</label>
-                <input required type="number" id="old_indicator_nuoc" name="old_indicator_nuoc"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                <input required type="number" id="old_indicator_nuoc" name="old_indicator_nuoc" value="${requestScope.oldNumberServices.get(1)}"  value="${oldNumberServices.get(1)}" class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
             </div>
             <div class="mb-6">
                 <label for="new_indicator_nuoc" class="block mb-2 text-sm font-medium text-gray-900">New Indicator Nuoc</label>
@@ -78,7 +81,7 @@
             </div>
             <div class="mb-6">
                 <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date</label>
-                <input required type="date" id="start_date_add" name="start_date"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                <input required type="date" id="start_date_add" name="start_date" value="${requestScope.newDateServices}" class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
             </div>
             <div class="mb-6">
                 <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900">End Date</label>

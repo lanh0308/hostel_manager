@@ -13,6 +13,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -189,8 +190,9 @@
                                             ${roomRental.end_date}
                                         </td>
                                         <td class="py-4 px-6 text-sm text-gray-900 font-medium whitespace-nowrap">
+                                            <jsp:useBean id="now" class="java.util.Date" />
                                             <c:choose>
-                                                <c:when test="${roomRental.state}">
+                                                <c:when test="${roomRental.state && roomRental.end_date.time gt now.time }">
                                                     Còn hiệu lực
                                                 </c:when>
                                                 <c:otherwise>
