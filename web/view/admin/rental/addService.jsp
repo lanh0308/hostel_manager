@@ -24,7 +24,7 @@
         %>
     </head>
     <body>
-        <form style="width: 500px" id="form-add-service">
+        <form style="width: 500px" id="form-add-service" class="border border-gray-500 rounded-lg p-10">
             <div id="error" class="hidden">
                 <div id="error-content" class="bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-red-700 mb-3" role="alert">
                 </div>
@@ -50,7 +50,7 @@
             </div>
             <div class="mb-6">
                 <label for="old_indicator_dien" class="block mb-2 text-sm font-medium text-gray-900">Old Indicator Dien</label>
-                <input required type="number" id="old_indicator_dien" name="old_indicator_dien" value="${requestScope.oldNumberServices.get(0)}"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                <input required type="number" id="old_indicator_dien" name="old_indicator_dien" value="${requestScope.oldNumberServices!=null && requestScope.oldNumberServices.size()>0 ? requestScope.oldNumberServices.get(0):""}"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
             </div>
             <div class="mb-6">
                 <label for="new_indicator_dien" class="block mb-2 text-sm font-medium text-gray-900">New Indicator Dien</label>
@@ -73,7 +73,7 @@
             </div>
             <div class="mb-6">
                 <label for="old_indicator_nuoc" class="block mb-2 text-sm font-medium text-gray-900">Old Indicator Nuoc</label>
-                <input required type="number" id="old_indicator_nuoc" name="old_indicator_nuoc" value="${requestScope.oldNumberServices.get(1)}"  value="${oldNumberServices.get(1)}" class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
+                <input required type="number" id="old_indicator_nuoc" name="old_indicator_nuoc" value="${requestScope.oldNumberServices.get(1)}"  class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">
             </div>
             <div class="mb-6">
                 <label for="new_indicator_nuoc" class="block mb-2 text-sm font-medium text-gray-900">New Indicator Nuoc</label>

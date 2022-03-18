@@ -25,7 +25,7 @@
             </div>
             <div class="w-full px-10 py-5">
                 <div class="flex justify-center items-center" style="height: 80vh">
-                    <form style="width: 500px" id="form-status-edit" action="/admin/room/add" method="post">
+                    <form style="width: 500px" id="form-status-edit" action="/admin/room/add" method="post" class="border border-gray-500 rounded-lg p-10">
                         <div class="mb-6">
                             <label for="roomCategory" class="block mb-2 text-sm font-medium text-gray-900">Room category</label>
                             <select id="roomCategory" name="roomCategory" class="bg-gray-50 border border-pink-300 text-gray-900 text-sm rounded-lg focus:ring-pink-500 focus:border-pink-500 block w-full p-2.5">

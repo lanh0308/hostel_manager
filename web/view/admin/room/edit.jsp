@@ -27,7 +27,7 @@
             </div>
             <div class="w-full px-10 py-5">
                 <div class="flex justify-center items-center" style="height: 80vh">
-                    <form style="width: 500px" id="form-status-edit" action="/admin/room/edit" method="post">
+                    <form style="width: 500px" id="form-status-edit" action="/admin/room/edit" method="post" class="border border-gray-500 rounded-lg p-10">
                         <input name="id" value="${room.id}" type="hidden"/>
                         <div class="mb-6">
                             <label for="roomCategory" class="block mb-2 text-sm font-medium text-gray-900">Room category</label>

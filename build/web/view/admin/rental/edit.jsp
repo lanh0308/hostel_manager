@@ -19,7 +19,7 @@
             </div>
             <div class="w-full px-10 py-5">
                 <div class="flex justify-center items-center" style="min-height: 93vh">
-                    <form style="width: 500px" action="/admin/rental/edit" method="post">
+                    <form style="width: 500px" action="/admin/rental/edit" method="post" class="border border-gray-500 rounded-lg p-10">
                         <input type="hidden" value="${requestScope.roomRental.customer.id}" name="idCustomer"/>
                         <input type="hidden" value="${requestScope.roomRental.id}" name="idRoomRental"/>
                         <div class="mb-6">

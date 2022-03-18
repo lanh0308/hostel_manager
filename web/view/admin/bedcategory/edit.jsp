@@ -23,7 +23,7 @@
             </div>
             <div class="w-full px-10 py-5">
                 <div class="flex justify-center items-center" style="height: 80vh">
-                    <form style="width: 500px" id="form-status-edit" action="/admin/bedcategory/edit" method="post">
+                    <form style="width: 500px" id="form-status-edit" action="/admin/bedcategory/edit" method="post" class="border border-gray-500 rounded-lg p-10">
                         <div id="showErrorForm" class="hidden">
                             <div id="contentErrorForm" class="bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-red-700 mb-3" role="alert">
                             </div>

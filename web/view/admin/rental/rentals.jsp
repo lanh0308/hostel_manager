@@ -43,13 +43,13 @@
                                     </form>
                                     <div class="flex items-center space-x-3">
                                        
-                                        <a href="/admin/rental/add" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Add rental</a>
+                                        <a href="/admin/rental/add" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-pink-300 rounded-lg border border-gray-300 hover:bg-pink-400 focus:ring-4 focus:ring-blue-300">Add rental</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="overflow-hidden shadow-md sm:rounded-lg">
                                 <table class="min-w-full">
-                                    <thead class="bg-pink-50">
+                                    <thead class="bg-pink-300">
                                         <tr>
                                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase">
                                                 Id

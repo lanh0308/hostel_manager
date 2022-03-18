@@ -667,7 +667,7 @@ public class ServiceDBContext extends DBContext {
      public  ArrayList<Integer>  getOldNumberServices(int rid) {
         ArrayList<Integer> servicesTop = new ArrayList<>();
         try {
-            String sql = "select top 2 room_rental_id, service.old_indicator\n"
+            String sql = "select top 2 room_rental_id, service.new_indicator\n"
                     + "from service inner join service_category on service.service_id = service_category.id\n"
                     + "where room_rental_id = ?\n"
                     + "order by service.start_date desc";
@@ -675,7 +675,7 @@ public class ServiceDBContext extends DBContext {
             stm.setInt(1, rid);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                servicesTop.add(rs.getInt("old_indicator"));
+                servicesTop.add(rs.getInt("new_indicator"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ServiceDBContext.class.getName()).log(Level.SEVERE, null, ex);

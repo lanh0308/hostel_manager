@@ -19,7 +19,7 @@
             </div>
             <div class="w-full px-10 py-5">
                 <div class="flex justify-center items-center" style="min-height: 93vh">
-                    <form style="width: 500px" action="/admin/rental/customer/edit" method="post">
+                    <form style="width: 500px" action="/admin/rental/customer/edit" method="post" class="border border-gray-500 rounded-lg p-10">
                         <c:if test="${requestScope.success!=null}">
                             <div id="success" class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
                                 <span id="success-content" class="font-medium">${requestScope.success}</span>

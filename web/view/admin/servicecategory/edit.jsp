@@ -23,7 +23,7 @@
             </div>
             <div class="w-full px-10 py-5">
                 <div class="flex justify-center items-center" style="height: 80vh">
-                    <form style="width: 500px" action="/admin/service/category/add" method="post">
+                    <form style="width: 500px" action="/admin/service/category/add" method="post" class="border border-gray-500 rounded-lg p-10">
                         <input value="${serviceCategory.id}" name="id" id="id" type="hidden"/>
                         <div class="mb-6">
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Name</label>

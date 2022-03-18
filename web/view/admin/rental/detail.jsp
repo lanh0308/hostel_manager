@@ -87,7 +87,7 @@
                     <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
                         <div class="overflow-hidden shadow-md sm:rounded-lg">
                             <table class="min-w-full">
-                                <thead class="bg-pink-100">
+                                <thead class="bg-pink-300">
                                     <tr>
                                         <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                             Room
