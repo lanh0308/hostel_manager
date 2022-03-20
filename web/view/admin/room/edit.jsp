@@ -35,10 +35,10 @@
                                 <c:forEach items="${roomCategorys}" var="roomCategory">
                                     <c:choose>
                                         <c:when test="${room.roomCategory.ID == roomCategory.ID}">
-                                            <option value="${roomCategory.ID}" selected>${roomCategory.name}</option>
+                                            <option value="${roomCategory.ID}" selected>${roomCategory.name} tầng ${roomCategory.floor_number}</option>
                                         </c:when>
                                         <c:otherwise>
-                                            <option value="${roomCategory.ID}">${roomCategory.name}</option>
+                                            <option value="${roomCategory.ID}">${roomCategory.name} tầng ${roomCategory.floor_number}</option>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>

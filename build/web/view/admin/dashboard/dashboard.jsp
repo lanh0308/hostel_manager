@@ -31,7 +31,7 @@
                 <jsp:include page="../navbar/navbar.jsp" />
             </div>
             <div class="w-full px-10 py-5">
-                <div class="grid grid-cols-4 gap-10">
+                <div class="grid grid-cols-3 gap-10">
                     <div class="p-6 bg-white rounded-lg border border-gray-200 shadow-md text-center py-10">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Room empty</h5>
                         <p class="mt-3 font-normal text-gray-700 font-medium" id="room-quantity-empty">0</p>
@@ -44,19 +44,56 @@
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">In debt</h5>
                         <p class="mt-3 font-normal text-gray-700 font-medium" id="debit-payment">0</p>
                     </div>
-                    <div class="p-6 bg-white rounded-lg border border-gray-200 shadow-md text-center py-10">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">Total Payment</h5>
-                        <p class="mt-3 font-normal text-gray-700 font-medium"n id="total-payment">0</p>
-                    </div>
                 </div>
-                <div class="w-full mt-10">
-                    <!--                    <div>
-                                             <canvas id="myChart" style="max-width: 100%!important; max-height: 80vh!important"></canvas>
-                                        </div>-->
-                    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-                    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-                    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-                    <div id="chartdiv"></div>
+                <div class="grid grid-cols-12 mt-10 w-full gap-10 px-10">
+                    <div class="col-span-10">
+                        <!--                    <div>
+                                                 <canvas id="myChart" style="max-width: 100%!important; max-height: 80vh!important"></canvas>
+                                            </div>-->
+                        <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+                        <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+                        <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+                        <div id="chartdiv"></div>
+                    </div>
+                    <div class="col-span-2">
+                        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                            <div class="inline-block py-2 min-w-full">
+                                <div class="overflow-hidden shadow-md sm:rounded-lg">
+                                    <table class="min-w-full">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase ">
+                                                    Floor
+                                                </th>
+                                                <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase">
+                                                    sử dụng
+                                                </th>
+                                                <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-center text-gray-700 uppercase">
+                                                    Chưa sử dụng
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <c:forEach items="${floors}" var="floor">
+                                                <tr class="bg-white border-b">
+                                                    <td class="py-4 px-6 text-sm font-medium text-gray-900 text-center whitespace-nowrap">
+                                                        ${floor.number}
+                                                    </td>
+                                                    <td class="py-4 px-6 text-sm text-gray-500 text-center whitespace-nowrap">
+                                                       ${floor.use}
+                                                    </td>
+                                                    <td class="py-4 px-6 text-sm text-gray-500 text-center whitespace-nowrap ">
+                                                         ${floor.notuse}
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -82,7 +119,6 @@
         </c:forEach>
         $("#payment-one-month").text(totalPaymentMonth.toLocaleString('vi', {style: 'currency', currency: 'VND'}));
         $("#debit-payment").text(totalDebit.toLocaleString('vi', {style: 'currency', currency: 'VND'}));
-        $("#total-payment").text(total.toLocaleString('vi', {style: 'currency', currency: 'VND'}))
         var roomEmpty = 0;
         <c:forEach items="${rooms}" var="room">
             <c:if test="${room.isEmpty}">
@@ -155,7 +191,7 @@
             return chart.get("colors").getIndex(series.columns.indexOf(target));
         });
 
-        var data1 = dataOfMonth.map((item, index) => ({month: "Month "+(index+1), value: item}))
+        var data1 = dataOfMonth.map((item, index) => ({month: "Month " + (index + 1), value: item}))
         console.log(data1);
 
         xAxis.data.setAll(data1);

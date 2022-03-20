@@ -42,7 +42,7 @@
                                         <button type="submit" class="ml-3 inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300">Search</button>
                                     </form>
                                     <div class="flex items-center space-x-3">
-                                       
+
                                         <a href="/admin/rental/add" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-pink-300 rounded-lg border border-gray-300 hover:bg-pink-400 focus:ring-4 focus:ring-blue-300">Add rental</a>
                                     </div>
                                 </div>
@@ -221,9 +221,12 @@
                 </div>
                 <div class="mt-10 w-full flex justify-center">
                     <nav aria-label="Page navigation example">
-                        <ul class="inline-flex -space-x-px">
+                        <ul class="flex items-center -space-x-px">
                             <li>
-                                <a data="<%=pagination.getPrev()%>" class="page-link py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Previous</a>
+                                <a data="<%=pagination.getPrev()%>" class="cursor-pointer flex page-link py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                                    <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
+                                    Prev
+                                </a>
                             </li>
                             <c:if test="${pagination.getPageIndex()>2}">
                                 <li>
@@ -249,7 +252,10 @@
                                 </li>
                             </c:if>
                             <li>
-                                <a data="<%=pagination.getNext()%>"  class="page-link py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Next</a>
+                                <a data="<%=pagination.getNext()%>"  class="cursor-pointer flex page-link py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                                    Next
+                                    <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                </a>
                             </li>
                         </ul>
                     </nav>

@@ -8,6 +8,7 @@ package controller.admin.dashboard;
 import controller.admin.auth.BaseAuthAdminController;
 import controller.auth.BaseAuthController;
 import dl.AccountDBContext;
+import dl.FloorDBContext;
 import dl.RoomDBContext;
 import dl.RoomRentalDBContext;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
+import model.Floor;
 import model.Room;
 import model.RoomRental;
 
@@ -38,6 +40,9 @@ public class DashboardController extends BaseAuthAdminController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RoomRentalDBContext roomRentalDB = new RoomRentalDBContext();
+        FloorDBContext floorDB = new FloorDBContext();
+        ArrayList<Floor> floors = floorDB.floors();
+        request.setAttribute("floors", floors);
         ArrayList<RoomRental> roomRentals = roomRentalDB.getRoomRentals();
         RoomDBContext roomDB = new RoomDBContext();
         ArrayList<Room> rooms = roomDB.getAllRooms();

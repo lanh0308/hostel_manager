@@ -136,7 +136,7 @@
             $("#error").addClass("hidden")
             $('#success-content').text("Update success");
             $("#success").removeClass("hidden")
-                location.href="/admin/rental/detail?id=${service.room_retal.id}"
+                location.href=document.referrer
             }
         })
         })

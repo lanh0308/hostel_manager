@@ -28,8 +28,43 @@ public class RoomCategoryDBContext extends DBContext {
                     + " r.unit_price, r.areage, r.floor_number, r.is_window, \n"
                     + " r.is_balcony, r.is_kitchen, r.desk_number, b.id as 'bid', b.name as 'bName'\n"
                     + "from room_category r inner join bed_category b on r.id_bed_category = b.id"
-                    + " order by r.unit_price asc";
+                    + " order by r.floor_number asc";
             PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                RoomCategory rc = new RoomCategory();
+                rc.setID(rs.getInt("rid"));
+                rc.setName(rs.getString("rName"));
+                rc.setUnit_price(rs.getInt("unit_price"));
+                rc.setAreage(rs.getInt("areage"));
+                rc.setFloor_number(rs.getInt("floor_number"));
+                rc.setIs_window(rs.getBoolean("is_window"));
+                rc.setIs_balcony(rs.getBoolean("is_balcony"));
+                rc.setIs_kitchen(rs.getBoolean("is_kitchen"));
+                rc.setDesk_number(rs.getInt("desk_number"));
+                BedCategory bc = new BedCategory();
+                bc.setId(rs.getInt("bid"));
+                bc.setName(rs.getString("bName"));
+                rc.setBed_category(bc);
+                roomCategorys.add(rc);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomCategoryDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return roomCategorys;
+    }
+
+    public ArrayList<RoomCategory> getRoomCategorys(int floor) {
+        ArrayList<RoomCategory> roomCategorys = new ArrayList<>();
+
+        try {
+            String sql = "select r.id as 'rid', r.name as 'rName', \n"
+                    + " r.unit_price, r.areage, r.floor_number, r.is_window, \n"
+                    + " r.is_balcony, r.is_kitchen, r.desk_number, b.id as 'bid', b.name as 'bName'\n"
+                    + "from room_category r inner join bed_category b on r.id_bed_category = b.id"
+                    + " where r.floor_number = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, floor);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 RoomCategory rc = new RoomCategory();

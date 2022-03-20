@@ -211,41 +211,41 @@
                                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap " id="unit-price-${item.id}">
                                                             ${item.service_category.unit_price}
                                                         </td>
-                                                        <script>
-                                                            var money = ${item.service_category.unit_price};
-                                                            money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
-                                                            $("#unit-price-${item.id}").text(money);
-                                                        </script>
-                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                                            <c:choose>
-                                                                <c:when test="${item.service_category.id == 1 || item.service_category.id==2}">
-                                                                    ${item.new_indicator - item.old_indicator }
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    1
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </td>
-                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap " id="price-service-${item.id}">
-                                                            ${item.getPrice()}
-                                                        </td>
-                                                        <script>
-                                                            var money = ${item.getPrice()};
-                                                            money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
-                                                            $("#price-service-${item.id}").text(money);
-                                                        </script>
-                                                        <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                                            <c:choose>
-                                                                <c:when test="${item.state}">
-                                                                    <input disabled name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" checked>
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <input disabled name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
+                                                <script>
+                                                    var money = ${item.service_category.unit_price};
+                                                    money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+                                                    $("#unit-price-${item.id}").text(money);
+                                                </script>
+                                                <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                    <c:choose>
+                                                        <c:when test="${item.service_category.id == 1 || item.service_category.id==2}">
+                                                            ${item.new_indicator - item.old_indicator }
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            1
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap " id="price-service-${item.id}">
+                                                    ${item.getPrice()}
+                                                </td>
+                                                <script>
+                                                    var money = ${item.getPrice()};
+                                                    money = money.toLocaleString('vi', {style: 'currency', currency: 'VND'});
+                                                    $("#price-service-${item.id}").text(money);
+                                                </script>
+                                                <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                    <c:choose>
+                                                        <c:when test="${item.state}">
+                                                            <input disabled name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" checked>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <input disabled name="payment-${service.key}[]" data-payment="${service.key}" onchange="paymentChange(this)" value="${item.id}" type="checkbox" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300">
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                </tr>
+                                            </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>
@@ -269,9 +269,12 @@
             </div>
             <div class="mt-10 w-full flex justify-center">
                 <nav aria-label="Page navigation example">
-                    <ul class="inline-flex -space-x-px">
+                    <ul class="flex items-center -space-x-px">
                         <li>
-                            <a data="<%=pagination.getPrev()%>" class="page-link py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Previous</a>
+                            <a data="<%=pagination.getPrev()%>" class="cursor-pointer flex page-link py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                                <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
+                                Prev
+                            </a>
                         </li>
                         <c:if test="${pagination.getPageIndex()>2}">
                             <li>
@@ -297,7 +300,10 @@
                             </li>
                         </c:if>
                         <li>
-                            <a data="<%=pagination.getNext()%>"  class="page-link py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Next</a>
+                            <a data="<%=pagination.getNext()%>"  class="cursor-pointer flex page-link py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                                Next
+                                <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </a>
                         </li>
                     </ul>
                 </nav>

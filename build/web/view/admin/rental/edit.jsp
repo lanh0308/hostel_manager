@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add rental Page</title>
+        <title>Update rental Page</title>
     </head>
     <jsp:include page="../base/header.jsp" />
     <body>
